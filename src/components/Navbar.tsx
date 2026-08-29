@@ -32,8 +32,8 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
       id="main-nav"
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? 'glass-panel border-b border-white/10 py-4 shadow-xl'
-          : 'bg-transparent py-6'
+          ? 'bg-white/95 backdrop-blur-md border-b border-blue-100/90 py-3.5 shadow-md shadow-blue-950/5'
+          : 'bg-white/80 backdrop-blur-sm border-b border-blue-50/60 py-5 shadow-sm'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between">
@@ -46,10 +46,10 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
           }}
           className="flex items-center gap-2.5 text-left group cursor-pointer"
         >
-          <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center border border-white/20 group-hover:border-[#b8cbbc] transition-colors">
-            <Compass className="w-5 h-5 text-[#b8cbbc] group-hover:rotate-45 transition-transform duration-300" />
+          <div className="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center border border-blue-200 group-hover:border-[#1e40af] group-hover:bg-[#1e40af] transition-all duration-300 shadow-sm">
+            <Compass className="w-5 h-5 text-[#1e40af] group-hover:text-white group-hover:rotate-45 transition-all duration-300" />
           </div>
-          <span className="text-xl sm:text-2xl font-bold tracking-tight text-[#e5e2e1] group-hover:text-white transition-colors font-manrope">
+          <span className="text-xl sm:text-2xl font-bold tracking-tight text-[#0f2b5c] group-hover:text-[#1e40af] transition-colors font-manrope">
             Logoipsum
           </span>
         </button>
@@ -63,15 +63,15 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
                 key={item.tab}
                 id={`nav-link-${item.tab}`}
                 onClick={() => onNavigate(item.tab)}
-                className={`text-sm font-medium tracking-wide transition-all duration-200 cursor-pointer relative py-1 ${
+                className={`text-sm tracking-wide transition-all duration-200 cursor-pointer relative py-1.5 ${
                   isActive
-                    ? 'text-[#b8cbbc] font-semibold'
-                    : 'text-[#e5e2e1]/80 hover:text-white hover:scale-105'
+                    ? 'text-[#1e40af] font-bold'
+                    : 'text-slate-700 hover:text-[#1e40af] font-medium'
                 }`}
               >
                 {item.label}
                 {isActive && (
-                  <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#b8cbbc] rounded-full shadow-[0_0_8px_rgba(184,203,188,0.6)]" />
+                  <span className="absolute bottom-0 left-0 w-full h-[2.5px] bg-[#1e40af] rounded-full shadow-[0_0_8px_rgba(30,64,175,0.4)]" />
                 )}
               </button>
             );
@@ -83,10 +83,10 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
           <button
             id="nav-plan-trip-btn"
             onClick={() => onNavigate('plan')}
-            className={`hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+            className={`hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer shadow-md ${
               activeTab === 'plan'
-                ? 'bg-[#b8cbbc] text-[#233429] shadow-lg shadow-[#b8cbbc]/20 font-bold'
-                : 'glass-pill text-[#e5e2e1] hover:bg-white/20 hover:border-white/40'
+                ? 'bg-[#0f2b5c] text-white shadow-blue-900/30'
+                : 'bg-[#1e40af] hover:bg-[#1d4ed8] text-white hover:shadow-lg hover:shadow-blue-600/25 hover:scale-[1.02]'
             }`}
           >
             <span>Plan Journey</span>
@@ -98,7 +98,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
             id="nav-mobile-menu-btn"
             aria-label="Toggle menu"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden w-10 h-10 rounded-full glass flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+            className="md:hidden w-10 h-10 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-[#0f2b5c] hover:bg-blue-100 transition-colors"
           >
             {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -107,8 +107,8 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
 
       {/* Mobile Drawer Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden glass-panel border-t border-white/10 px-6 py-6 mt-3 space-y-4 animate-in slide-in-from-top-4 duration-300">
-          <nav className="flex flex-col space-y-3">
+        <div className="md:hidden bg-white border-t border-blue-100 px-6 py-6 mt-3 space-y-4 shadow-xl animate-in slide-in-from-top-4 duration-300">
+          <nav className="flex flex-col space-y-2">
             {navItems.map((item) => {
               const isActive = activeTab === item.tab;
               return (
@@ -118,14 +118,14 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
                     onNavigate(item.tab);
                     setIsMobileMenuOpen(false);
                   }}
-                  className={`text-left py-2.5 px-3 rounded-lg text-base font-medium transition-colors flex items-center justify-between ${
+                  className={`text-left py-3 px-4 rounded-xl text-base font-semibold transition-colors flex items-center justify-between ${
                     isActive
-                      ? 'bg-white/10 text-[#b8cbbc] font-semibold border-l-2 border-[#b8cbbc]'
-                      : 'text-[#e5e2e1]/80 hover:text-white hover:bg-white/5'
+                      ? 'bg-blue-50 text-[#1e40af] border-l-4 border-[#1e40af]'
+                      : 'text-slate-700 hover:text-[#1e40af] hover:bg-slate-50'
                   }`}
                 >
                   <span>{item.label}</span>
-                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#b8cbbc]" />}
+                  {isActive && <span className="w-2 h-2 rounded-full bg-[#1e40af]" />}
                 </button>
               );
             })}
@@ -135,7 +135,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
                 onNavigate('plan');
                 setIsMobileMenuOpen(false);
               }}
-              className="w-full mt-3 py-3 px-4 rounded-full bg-[#b8cbbc] text-[#233429] text-sm font-semibold flex items-center justify-center gap-2 shadow-lg"
+              className="w-full mt-3 py-3 px-4 rounded-full bg-[#1e40af] hover:bg-[#1d4ed8] text-white text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-900/20"
             >
               <span>Plan Custom Journey</span>
               <ArrowUpRight className="w-4 h-4" />

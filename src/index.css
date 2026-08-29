@@ -2,30 +2,30 @@
 
 @layer base {
   :root {
-    --color-bg: #131313;
-    --color-surface: #131313;
-    --color-surface-container: #20201f;
-    --color-surface-container-high: #2a2a2a;
-    --color-surface-container-highest: #353535;
-    --color-surface-container-low: #1c1b1b;
-    --color-surface-container-lowest: #0e0e0e;
-    --color-on-surface: #e5e2e1;
-    --color-on-surface-variant: #c3c8c2;
-    --color-primary: #b8cbbc;
-    --color-primary-container: #2d3e33;
-    --color-on-primary: #233429;
-    --color-on-primary-container: #96a99b;
-    --color-primary-fixed: #d4e7d8;
-    --color-primary-fixed-dim: #b8cbbc;
-    --color-secondary: #f4bb92;
-    --color-secondary-container: #653d1e;
-    --color-outline: #8d928d;
-    --color-outline-variant: #434844;
+    --color-bg: #f8fafc;
+    --color-surface: #ffffff;
+    --color-surface-container: #f1f5f9;
+    --color-surface-container-high: #e2e8f0;
+    --color-surface-container-highest: #cbd5e1;
+    --color-surface-container-low: #ffffff;
+    --color-surface-container-lowest: #ffffff;
+    --color-on-surface: #0f172a;
+    --color-on-surface-variant: #334155;
+    --color-primary: #1e40af;
+    --color-primary-container: #dbeafe;
+    --color-on-primary: #ffffff;
+    --color-on-primary-container: #1e3a8a;
+    --color-primary-fixed: #1d4ed8;
+    --color-primary-fixed-dim: #3b82f6;
+    --color-secondary: #d4af37;
+    --color-secondary-container: #fef3c7;
+    --color-outline: #94a3b8;
+    --color-outline-variant: #cbd5e1;
   }
 
   body {
-    background-color: #131313;
-    color: #e5e2e1;
+    background-color: #f8fafc;
+    color: #0f172a;
     font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 }
@@ -42,40 +42,55 @@
   font-family: 'Manrope', sans-serif;
 }
 
+/* Royal Light Frosted Glass & Surfaces */
 .glass {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(219, 234, 254, 0.9);
+}
+
+.glass-dark {
+  background: rgba(10, 25, 47, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .glass-panel {
-  background: rgba(32, 32, 31, 0.45);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 10px 35px -5px rgba(15, 43, 92, 0.06), 0 0 0 1px rgba(226, 232, 240, 0.6);
 }
 
 .glass-panel-card {
-  background: rgba(28, 27, 27, 0.6);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid rgba(219, 234, 254, 0.8);
+  box-shadow: 0 4px 20px -2px rgba(15, 43, 92, 0.04);
 }
 
 .glass-pill {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(239, 246, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(191, 219, 254, 0.8);
+}
+
+.glass-pill-dark {
+  background: rgba(15, 43, 92, 0.6);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .text-glow {
-  text-shadow: 0 0 24px rgba(255, 255, 255, 0.35);
+  text-shadow: 0 0 24px rgba(255, 255, 255, 0.45);
 }
 
-.text-primary-glow {
-  text-shadow: 0 0 20px rgba(184, 203, 188, 0.4);
+.text-royal-glow {
+  text-shadow: 0 2px 10px rgba(30, 64, 175, 0.2);
 }
 
 /* Custom Scrollbars */
@@ -85,14 +100,15 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(19, 19, 19, 0.6);
+  background: rgba(241, 245, 249, 0.8);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(30, 64, 175, 0.25);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(30, 64, 175, 0.5);
 }
+

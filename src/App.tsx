@@ -72,7 +72,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#131313] text-[#e5e2e1] flex flex-col justify-between selection:bg-[#b8cbbc] selection:text-[#233429]">
+    <div className="min-h-screen bg-[#f8fafc] text-[#0f172a] flex flex-col justify-between selection:bg-[#1e40af] selection:text-white">
       {/* Top Fixed Navigation */}
       <Navbar activeTab={activeTab} onNavigate={handleNavigate} />
 
@@ -80,7 +80,7 @@ export const App: React.FC = () => {
       <main className="flex-1 w-full">
         {activeTab === 'home' && (
           <div>
-            {/* Hero Section matching Image 1 & 4 */}
+            {/* Hero Section matching Royal Theme */}
             <HeroHome
               onNavigate={handleNavigate}
               onSelectDestination={(dest) => setSelectedDestination(dest)}
@@ -90,20 +90,20 @@ export const App: React.FC = () => {
             <section className="py-20 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto space-y-12">
               <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                 <div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-pill text-xs font-semibold uppercase tracking-wider text-[#b8cbbc] mb-2">
-                    <Sparkles className="w-3.5 h-3.5" />
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-xs font-bold uppercase tracking-wider text-[#1e40af] mb-2 shadow-sm">
+                    <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
                     <span>Featured Collections</span>
                   </div>
-                  <h2 className="text-3xl sm:text-4xl font-normal text-white font-playfair">
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0f172a] font-playfair">
                     Curated Expeditions
                   </h2>
                 </div>
                 <button
                   onClick={() => handleNavigate('packages')}
-                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#b8cbbc] hover:text-white transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#1e40af] hover:text-[#1d4ed8] transition-colors cursor-pointer group"
                 >
                   <span>View All Journeys</span>
-                  <ArrowUpRight className="w-4 h-4" />
+                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </button>
               </div>
 
@@ -112,7 +112,7 @@ export const App: React.FC = () => {
                   <div
                     key={pkg.id}
                     onClick={() => setSelectedPackage(pkg)}
-                    className="group rounded-3xl overflow-hidden glass-panel border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col justify-between cursor-pointer hover:translate-y-[-4px] shadow-xl"
+                    className="group rounded-3xl overflow-hidden bg-white border border-blue-100 hover:border-blue-300 transition-all duration-300 flex flex-col justify-between cursor-pointer hover:translate-y-[-4px] shadow-lg shadow-blue-950/5 hover:shadow-xl hover:shadow-blue-900/10"
                   >
                     <div className="relative h-60 w-full overflow-hidden">
                       <img
@@ -121,32 +121,32 @@ export const App: React.FC = () => {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         referrerPolicy="no-referrer"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#1c1b1b] via-transparent to-black/30" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
                       <div className="absolute top-4 left-4">
-                        <span className="glass-pill text-white text-xs px-2.5 py-0.5 rounded-full">
+                        <span className="bg-white/90 backdrop-blur-md text-[#0f2b5c] text-xs font-bold px-3 py-1 rounded-full shadow-sm">
                           {pkg.duration}
                         </span>
                       </div>
                     </div>
-                    <div className="p-6 space-y-3 flex-1 flex flex-col justify-between">
+                    <div className="p-6 space-y-3 flex-1 flex flex-col justify-between bg-white">
                       <div>
-                        <div className="flex items-center gap-1.5 text-xs text-[#b8cbbc] font-medium mb-1">
+                        <div className="flex items-center gap-1.5 text-xs text-[#1e40af] font-semibold mb-1">
                           <MapPin className="w-3.5 h-3.5" />
                           <span>{pkg.location}</span>
                         </div>
-                        <h3 className="text-xl font-bold text-white font-playfair group-hover:text-[#b8cbbc] transition-colors">
+                        <h3 className="text-xl font-bold text-[#0f172a] font-playfair group-hover:text-[#1e40af] transition-colors">
                           {pkg.title}
                         </h3>
-                        <p className="text-xs text-[#c3c8c2] line-clamp-2 mt-1 leading-relaxed">
+                        <p className="text-xs text-[#475569] line-clamp-2 mt-1 leading-relaxed">
                           {pkg.subtitle}
                         </p>
                       </div>
-                      <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                      <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
                         <div>
-                          <span className="text-[10px] text-[#8d928d] uppercase block">Starting</span>
-                          <span className="text-lg font-bold text-white">${pkg.price.toLocaleString()}</span>
+                          <span className="text-[10px] text-slate-400 uppercase font-semibold block">Starting</span>
+                          <span className="text-lg font-bold text-[#0f2b5c]">${pkg.price.toLocaleString()}</span>
                         </div>
-                        <div className="w-9 h-9 rounded-full glass flex items-center justify-center text-white group-hover:bg-[#b8cbbc] group-hover:text-[#233429] transition-colors">
+                        <div className="w-9 h-9 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-[#1e40af] group-hover:bg-[#1e40af] group-hover:text-white transition-colors shadow-sm">
                           <ArrowUpRight className="w-4 h-4" />
                         </div>
                       </div>
@@ -158,38 +158,38 @@ export const App: React.FC = () => {
 
             {/* Core Values Quick Banner */}
             <section className="pb-20 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto">
-              <div className="glass-panel p-8 sm:p-12 rounded-3xl border border-white/10 grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-white p-8 sm:p-12 rounded-3xl border border-blue-100 shadow-xl shadow-blue-950/5 grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-[#b8cbbc] flex-shrink-0">
-                    <Compass className="w-5 h-5" />
+                  <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-center text-[#1e40af] flex-shrink-0 shadow-sm">
+                    <Compass className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="text-base font-bold text-white mb-1">Uncharted Sanctuaries</h4>
-                    <p className="text-xs text-[#c3c8c2] leading-relaxed">
+                    <h4 className="text-base font-bold text-[#0f172a] mb-1">Uncharted Sanctuaries</h4>
+                    <p className="text-xs text-[#475569] leading-relaxed">
                       Handpicked secluded valleys, private islets, and pristine alpine retreats.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-[#b8cbbc] flex-shrink-0">
-                    <ShieldCheck className="w-5 h-5" />
+                  <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-center text-[#1e40af] flex-shrink-0 shadow-sm">
+                    <ShieldCheck className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="text-base font-bold text-white mb-1">Certified Eco-Stewardship</h4>
-                    <p className="text-xs text-[#c3c8c2] leading-relaxed">
+                    <h4 className="text-base font-bold text-[#0f172a] mb-1">Certified Eco-Stewardship</h4>
+                    <p className="text-xs text-[#475569] leading-relaxed">
                       100% carbon-neutral itineraries and native conservation partnerships.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-[#b8cbbc] flex-shrink-0">
-                    <Heart className="w-5 h-5" />
+                  <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-center text-[#1e40af] flex-shrink-0 shadow-sm">
+                    <Heart className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="text-base font-bold text-white mb-1">24/7 Private Concierge</h4>
-                    <p className="text-xs text-[#c3c8c2] leading-relaxed">
+                    <h4 className="text-base font-bold text-[#0f172a] mb-1">24/7 Private Concierge</h4>
+                    <p className="text-xs text-[#475569] leading-relaxed">
                       Dedicated travel architects ensuring seamless logistics at every step.
                     </p>
                   </div>
@@ -257,3 +257,4 @@ export const App: React.FC = () => {
 };
 
 export default App;
+

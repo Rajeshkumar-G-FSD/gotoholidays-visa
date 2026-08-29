@@ -21,18 +21,18 @@ export const PackageDetailModal: React.FC<PackageDetailModalProps> = ({
   return (
     <div
       id="package-detail-modal-backdrop"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-200"
       onClick={onClose}
     >
       <div
         id="package-detail-modal"
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto glass-panel border border-white/20 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl animate-in zoom-in-95 duration-200"
+        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white border border-blue-100 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl shadow-blue-950/20 animate-in zoom-in-95 duration-200"
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 w-9 h-9 rounded-full glass flex items-center justify-center text-white hover:bg-white/20 transition-colors z-20 cursor-pointer"
+          className="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-700 transition-colors z-20 cursor-pointer shadow-sm"
         >
           <X className="w-5 h-5" />
         </button>
@@ -45,26 +45,26 @@ export const PackageDetailModal: React.FC<PackageDetailModalProps> = ({
             className="w-full h-full object-cover"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#131313] via-black/30 to-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a192f]/90 via-[#0f2b5c]/30 to-black/20" />
           
           <div className="absolute bottom-6 left-6 right-6">
             <div className="flex items-center gap-2 mb-2">
-              <span className="glass-pill text-[#b8cbbc] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+              <span className="bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                 {pkg.category}
               </span>
-              <span className="bg-[#b8cbbc]/20 text-[#b8cbbc] border border-[#b8cbbc]/30 text-xs px-2.5 py-0.5 rounded-full">
+              <span className="bg-blue-500/30 text-blue-100 border border-blue-300/40 text-xs font-bold px-2.5 py-0.5 rounded-full">
                 {pkg.duration}
               </span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-bold text-white font-playfair">
               {pkg.title}
             </h2>
-            <div className="flex items-center gap-4 text-xs sm:text-sm text-white/80 mt-2">
+            <div className="flex items-center gap-4 text-xs sm:text-sm text-blue-100 mt-2 font-medium">
               <span className="flex items-center gap-1">
-                <MapPin className="w-4 h-4 text-[#b8cbbc]" /> {pkg.location}
+                <MapPin className="w-4 h-4 text-[#60a5fa]" /> {pkg.location}
               </span>
               <span className="flex items-center gap-1">
-                <Users className="w-4 h-4 text-[#b8cbbc]" /> {pkg.groupSize}
+                <Users className="w-4 h-4 text-[#60a5fa]" /> {pkg.groupSize}
               </span>
             </div>
           </div>
@@ -73,29 +73,29 @@ export const PackageDetailModal: React.FC<PackageDetailModalProps> = ({
         {/* Overview & Quick Info */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2 space-y-3">
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-white">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
               Expedition Overview
             </h3>
-            <p className="text-sm leading-relaxed text-[#c3c8c2]">
+            <p className="text-sm leading-relaxed text-[#334155]">
               {pkg.overview}
             </p>
           </div>
 
-          <div className="glass-panel-card p-5 rounded-2xl border border-white/10 space-y-3">
+          <div className="bg-blue-50/70 p-5 rounded-2xl border border-blue-100 space-y-3">
             <div>
-              <span className="text-[11px] uppercase tracking-wider text-[#8d928d] block font-semibold">Tier & Price</span>
-              <p className="text-2xl font-bold text-white">${pkg.price.toLocaleString()} <span className="text-xs font-normal text-white/70">/ guest</span></p>
+              <span className="text-[11px] uppercase tracking-wider text-slate-500 block font-bold">Tier & Price</span>
+              <p className="text-2xl font-bold text-[#0f172a]">${pkg.price.toLocaleString()} <span className="text-xs font-normal text-slate-500">/ guest</span></p>
             </div>
-            <div className="pt-2 border-t border-white/10 text-xs text-[#c3c8c2] space-y-1">
-              <p><span className="text-[#8d928d]">Pace:</span> {pkg.difficulty}</p>
-              <p><span className="text-[#8d928d]">Group:</span> {pkg.groupSize}</p>
+            <div className="pt-2 border-t border-blue-200/60 text-xs text-[#334155] space-y-1 font-medium">
+              <p><span className="text-slate-400">Pace:</span> {pkg.difficulty}</p>
+              <p><span className="text-slate-400">Group:</span> {pkg.groupSize}</p>
             </div>
           </div>
         </div>
 
         {/* Day-by-Day Itinerary Tab Navigation */}
         <div className="space-y-4">
-          <h3 className="text-sm font-semibold uppercase tracking-wider text-white">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
             Day-by-Day Itinerary
           </h3>
 
@@ -104,10 +104,10 @@ export const PackageDetailModal: React.FC<PackageDetailModalProps> = ({
               <button
                 key={item.day}
                 onClick={() => setActiveDay(item.day)}
-                className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                   activeDay === item.day
-                    ? 'bg-[#b8cbbc] text-[#233429] shadow-md'
-                    : 'glass-panel text-white/70 hover:text-white'
+                    ? 'bg-[#1e40af] text-white shadow-md'
+                    : 'bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200'
                 }`}
               >
                 Day {item.day}
@@ -119,12 +119,12 @@ export const PackageDetailModal: React.FC<PackageDetailModalProps> = ({
           {(() => {
             const current = pkg.itinerary.find((d) => d.day === activeDay) || pkg.itinerary[0];
             return (
-              <div className="glass-panel p-5 rounded-2xl border border-white/10 space-y-1.5 animate-in fade-in duration-200">
-                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#b8cbbc]">
+              <div className="bg-blue-50/50 p-5 rounded-2xl border border-blue-100 space-y-1.5 animate-in fade-in duration-200">
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#1e40af]">
                   <Clock className="w-3.5 h-3.5" /> Day {current.day} Schedule
                 </div>
-                <h4 className="text-lg font-bold text-white">{current.title}</h4>
-                <p className="text-sm text-[#c3c8c2] leading-relaxed">{current.desc}</p>
+                <h4 className="text-lg font-bold text-[#0f172a]">{current.title}</h4>
+                <p className="text-sm text-[#334155] leading-relaxed">{current.desc}</p>
               </div>
             );
           })()}
@@ -132,13 +132,13 @@ export const PackageDetailModal: React.FC<PackageDetailModalProps> = ({
 
         {/* Inclusions */}
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold uppercase tracking-wider text-white">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
             Curated Inclusions
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {pkg.inclusions.map((inc, i) => (
-              <div key={i} className="flex items-center gap-2.5 text-xs text-[#e5e2e1] bg-white/5 p-2.5 rounded-xl border border-white/5">
-                <ShieldCheck className="w-4 h-4 text-[#b8cbbc] flex-shrink-0" />
+              <div key={i} className="flex items-center gap-2.5 text-xs text-slate-800 bg-blue-50/40 p-2.5 rounded-xl border border-blue-100 font-medium">
+                <ShieldCheck className="w-4 h-4 text-[#1e40af] flex-shrink-0" />
                 <span>{inc}</span>
               </div>
             ))}
@@ -146,16 +146,16 @@ export const PackageDetailModal: React.FC<PackageDetailModalProps> = ({
         </div>
 
         {/* Action Bottom */}
-        <div className="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+        <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <span className="text-xs text-[#8d928d] block">Total Experience Rate</span>
-            <span className="text-2xl font-bold text-white">${pkg.price.toLocaleString()}</span>
+            <span className="text-xs text-slate-400 block font-bold">Total Experience Rate</span>
+            <span className="text-2xl font-bold text-[#0f172a]">${pkg.price.toLocaleString()}</span>
           </div>
 
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
-              className="px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider text-white/80 hover:text-white"
+              className="px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider text-slate-600 hover:text-slate-900 transition-colors"
             >
               Close
             </button>
@@ -164,7 +164,7 @@ export const PackageDetailModal: React.FC<PackageDetailModalProps> = ({
                 setIsBooked(true);
                 onBookNow(pkg);
               }}
-              className="px-8 py-3 rounded-full bg-[#b8cbbc] text-[#233429] text-xs font-bold uppercase tracking-wider hover:bg-[#d4e7d8] transition-colors flex items-center gap-2 shadow-xl"
+              className="px-8 py-3 rounded-full bg-[#1e40af] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#1d4ed8] hover:scale-[1.01] transition-all flex items-center gap-2 shadow-lg shadow-blue-950/10"
             >
               <span>{isBooked ? 'Reserved! Checking Out...' : 'Reserve This Journey'}</span>
               <ArrowRight className="w-4 h-4" />
