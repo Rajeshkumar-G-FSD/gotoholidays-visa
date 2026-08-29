@@ -1,4 +1,45 @@
-export type ActiveTab = 'home' | 'destinations' | 'packages' | 'about' | 'contact' | 'plan';
+export type ActiveTab =
+  | 'home'
+  | 'destinations'
+  | 'visa-services'
+  | 'packages'
+  | 'about'
+  | 'contact'
+  | 'plan';
+
+export interface VisaService {
+  id: string;
+  title: string;
+  subtitle: string;
+  feature: string;
+  accent: 'blue' | 'rose' | 'green' | 'red' | 'amber' | 'yellow';
+  icon: 'landmark' | 'globe' | 'plane';
+}
+
+export interface ThailandPackage {
+  id: string;
+  title: string;
+  duration: string;
+  priceFrom: number;
+  inclusions: string[];
+  imageUrl: string;
+}
+
+export interface GlobalPackage {
+  id: string;
+  title: string;
+  meta: string;
+  priceFrom: number;
+  imageUrl: string;
+}
+
+export interface Testimonial {
+  id: string;
+  quote: string;
+  name: string;
+  role: string;
+  avatar: string;
+}
 
 export interface Destination {
   id: string;

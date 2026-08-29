@@ -198,7 +198,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onFormSubmit }) => {
                 </div>
                 <div>
                   <p className="text-xs text-slate-400 uppercase font-bold">Email Us</p>
-                  <p className="text-[#0f172a] font-semibold">concierge@logoipsum.com</p>
+                  <p className="text-[#0f172a] font-semibold">concierge@gotoholidays.com</p>
                 </div>
               </div>
 

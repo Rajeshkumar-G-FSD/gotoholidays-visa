@@ -22,6 +22,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
   const navItems: { tab: ActiveTab; label: string }[] = [
     { tab: 'home', label: 'Home' },
     { tab: 'destinations', label: 'Destinations' },
+    { tab: 'visa-services', label: 'Visa Services' },
     { tab: 'packages', label: 'Packages' },
     { tab: 'about', label: 'About Us' },
     { tab: 'contact', label: 'Contact' },

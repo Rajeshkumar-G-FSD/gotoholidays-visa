@@ -1,4 +1,129 @@
-import { Destination, TravelPackage, VisaRequirement } from '../types';
+import {
+  Destination,
+  TravelPackage,
+  VisaRequirement,
+  VisaService,
+  ThailandPackage,
+  GlobalPackage,
+  Testimonial,
+} from '../types';
+
+const U = (id: string, w = 900, h = 650) =>
+  `https://images.unsplash.com/${id}?w=${w}&h=${h}&fit=crop&q=75&auto=format`;
+
+export const THAILAND_PACKAGES: ThailandPackage[] = [
+  {
+    id: 'bangkok-pattaya',
+    title: 'Bangkok + Pattaya',
+    duration: '4N/5D',
+    priceFrom: 22999,
+    inclusions: ['Coral Island Tour', 'Alcazar Show', 'Hotel + Breakfast', 'Airport Transfers'],
+    imageUrl: U('photo-1613672803979-a6edfc5a179b'),
+  },
+  {
+    id: 'phuket-krabi',
+    title: 'Phuket + Krabi',
+    duration: '5N/6D',
+    priceFrom: 34999,
+    inclusions: ['Phi Phi Island Tour', '4 Star Hotel', 'Speed Boat Experience', 'Honeymoon Friendly'],
+    imageUrl: U('photo-1552465011-b4e21bf6e79a'),
+  },
+  {
+    id: 'honeymoon-special',
+    title: 'Honeymoon Special',
+    duration: '4N/5D',
+    priceFrom: 42999,
+    inclusions: ['Romantic Dinner Cruise', 'Beach Resort Stay', 'Couple Activities', 'Private Island Tours'],
+    imageUrl: U('photo-1520250497591-112f2f40a3f4'),
+  },
+];
+
+export const GLOBAL_PACKAGES: GlobalPackage[] = [
+  { id: 'maldives', title: 'Maldives', meta: '4N/5D • Hotel + Flight', priceFrom: 45000, imageUrl: U('photo-1514282401047-d79a71a590e8') },
+  { id: 'bali', title: 'Bali', meta: '5N/6D • Private Villa', priceFrom: 38000, imageUrl: U('photo-1537996194471-e657df975ab4') },
+  { id: 'thailand', title: 'Thailand', meta: '4N/5D • Free Visa', priceFrom: 28000, imageUrl: U('photo-1552465011-b4e21bf6e79a') },
+  { id: 'europe', title: 'Europe', meta: '9N/10D • Guided Tour', priceFrom: 145000, imageUrl: U('photo-1467269204594-9661b134dd2b') },
+  { id: 'dubai', title: 'Dubai', meta: '4N/5D • Expo + Desert', priceFrom: 42000, imageUrl: U('photo-1512453979798-5ea266f8880c') },
+  { id: 'kashmir', title: 'Kashmir', meta: '5N/6D • Houseboat', priceFrom: 25000, imageUrl: U('photo-1595815771614-ade9d652a65d') },
+];
+
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    id: 't1',
+    quote:
+      'Seamless process for my parents US visa. The team were incredibly helpful with the interview prep. Highly recommended!',
+    name: 'Rahul Sharma',
+    role: 'USA Visitor Visa',
+    avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+  },
+  {
+    id: 't2',
+    quote:
+      'Booking our honeymoon to Maldives through GOTO Holidays was the best decision. Everything was pre-planned to perfection.',
+    name: 'Priya Patel',
+    role: 'Europe (Schengen)',
+    avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+  },
+  {
+    id: 't3',
+    quote:
+      'Excellent service and transparency regarding the Thailand packages. The hotel selection was premium yet affordable.',
+    name: 'David Wilson',
+    role: 'Thailand Family Trip',
+    avatar: 'https://randomuser.me/api/portraits/men/76.jpg',
+  },
+];
+
+export const VISA_SERVICES: VisaService[] = [
+  {
+    id: 'usa',
+    title: 'USA Visa',
+    subtitle: 'Business & Tourist (B1/B2)',
+    feature: '10 Years Validity',
+    accent: 'blue',
+    icon: 'landmark',
+  },
+  {
+    id: 'uk',
+    title: 'UK Visa',
+    subtitle: 'Standard Visitor Visa',
+    feature: '6 Months to 10 Years',
+    accent: 'rose',
+    icon: 'globe',
+  },
+  {
+    id: 'schengen',
+    title: 'Schengen Visa',
+    subtitle: 'Europe Multi-Entry',
+    feature: '27 Countries Access',
+    accent: 'green',
+    icon: 'globe',
+  },
+  {
+    id: 'canada',
+    title: 'Canada Visa',
+    subtitle: 'Visitor & Student Visa',
+    feature: 'Fast Processing',
+    accent: 'red',
+    icon: 'landmark',
+  },
+  {
+    id: 'singapore',
+    title: 'Singapore Visa',
+    subtitle: 'E-Visa Facility',
+    feature: '2-3 Working Days',
+    accent: 'amber',
+    icon: 'globe',
+  },
+  {
+    id: 'dubai',
+    title: 'Dubai Visa',
+    subtitle: '30/60 Days Tourist',
+    feature: 'Quick Approval',
+    accent: 'yellow',
+    icon: 'globe',
+  },
+];
 
 export const HERO_BACKGROUND = 'https://lh3.googleusercontent.com/aida-public/AB6AXuA75hZd7X02bM4KOp_SLzAyOWiJWgn4BpHXx7wmTrNK2scH6oNlF3cGgt4tNgyJxVXidkIbpbFfJMCO-g8RC2Xt4vR3tmwo4GlbVrI1nSwJ2kpE6rWx1_b_nFoL8e872V98KDJk5J6lp_JE1Lrxeo_uE2imAujhSay2yDPX9j5WxPvJsQszQez3jumUWNF2R28iub3hdR7_FHdl-gF-y8etrMkoOKvBtRR8vmtmOvVmBfNjC5X3LKPoVq0MEM69MDNqEg';
 
