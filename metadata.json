@@ -1,0 +1,6 @@
+{
+  "name": "Logoipsum - Travel Beyond the Ordinary",
+  "description": "Explore extraordinary destinations, curated journey packages, global visa requirements, and custom travel itineraries with a refined dark-mode aesthetic.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

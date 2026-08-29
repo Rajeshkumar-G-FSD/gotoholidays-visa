@@ -1,0 +1,80 @@
+export type ActiveTab = 'home' | 'destinations' | 'packages' | 'about' | 'contact' | 'plan';
+
+export interface Destination {
+  id: string;
+  name: string;
+  location: string;
+  country: string;
+  region: 'Europe' | 'Asia Pacific' | 'Americas' | 'Africa' | 'Middle East';
+  description: string;
+  fullStory: string;
+  imageUrl: string;
+  heroBgUrl?: string;
+  coordinates?: string;
+  highlights: string[];
+  bestTimeToVisit: string;
+  avgCost: string;
+  tag?: string;
+}
+
+export interface TravelPackage {
+  id: string;
+  title: string;
+  subtitle: string;
+  location: string;
+  duration: string;
+  price: number;
+  featured?: boolean;
+  isNew?: boolean;
+  category: 'Mountains & Lakes' | 'Coastal Escapes' | 'Cultural Immersions' | 'Wilderness Expeditions';
+  priceTier: 'Premium ($$$)' | 'Luxury ($$$$)';
+  imageUrl: string;
+  overview: string;
+  itinerary: { day: number; title: string; desc: string }[];
+  inclusions: string[];
+  groupSize: string;
+  difficulty: string;
+}
+
+export interface VisaRequirement {
+  id: string;
+  country: string;
+  region: 'Asia Pacific' | 'Europe (Schengen)' | 'North America' | 'South America' | 'Africa' | 'Middle East';
+  badgeType: 'Visa Free' | 'ETA Required' | 'eVisa' | 'eVisa Starting 2025' | 'Visa Required';
+  badgeColor: 'primary' | 'tertiary' | 'error' | 'secondary';
+  passportType: string;
+  maxStay: string;
+  requirementSummary: string;
+  fullRequirements: string[];
+  processingTime: string;
+  fee: string;
+  documentsNeeded: string[];
+  imageUrl: string;
+  statusNotes?: string;
+}
+
+export interface InquiryFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  destination: string;
+  message: string;
+}
+
+export interface CustomPlanFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  destination: string;
+  travelers: string;
+  date: string;
+  message: string;
+  travelStyle?: string;
+}
+
+export interface ToastMessage {
+  id: string;
+  title: string;
+  description: string;
+  type?: 'success' | 'info' | 'error';
+}
