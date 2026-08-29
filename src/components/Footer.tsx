@@ -117,7 +117,18 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         </div>
 
         <div className="border-t border-white/10 pt-7 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500">
-          <p>© {new Date().getFullYear()} DATAZYNC.COM — Private &amp; Confidential.</p>
+          <p>
+            © {new Date().getFullYear()}{' '}
+            <a
+              href="https://www.datazync.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative text-slate-400 transition-colors duration-200 hover:text-white after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-0 after:bg-[#60a5fa] after:transition-all after:duration-300 hover:after:w-full"
+            >
+              DATAZYNC.COM
+            </a>{' '}
+            — Private &amp; Confidential.
+          </p>
           <div className="flex items-center gap-6">
             <span className="hover:text-slate-200 transition-colors cursor-pointer">Sitemap</span>
             <span className="hover:text-slate-200 transition-colors cursor-pointer">Press Inquiries</span>
