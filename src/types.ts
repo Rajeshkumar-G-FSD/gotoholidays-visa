@@ -4,9 +4,26 @@ export type ActiveTab =
   | 'visa-services'
   | 'packages'
   | 'destination-detail'
+  | 'enquiry'
+  | 'admin'
   | 'about'
   | 'contact'
   | 'plan';
+
+export interface EnquiryRecord {
+  id: string;
+  type: 'visa' | 'travel';
+  createdAt: string; // ISO
+  name: string;
+  email: string;
+  phone: string;
+  residence: string;
+  contactMethod: string;
+  subject: string; // visa country OR destination
+  travelDate: string; // intended travel / start date
+  travellers: string;
+  raw: Record<string, string | string[]>;
+}
 
 export interface VisaService {
   id: string;

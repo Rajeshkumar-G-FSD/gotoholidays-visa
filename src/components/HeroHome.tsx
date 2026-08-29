@@ -24,25 +24,39 @@ const CIRCLE_LABELS: Record<string, string> = {
 
 const pad = (n: number) => String(n).padStart(2, '0');
 
-const SOCIALS: { Icon: typeof Facebook; label: string; href: string }[] = [
+const SOCIAL_CLS =
+  'w-10 h-10 rounded-full border border-white/35 flex items-center justify-center text-white/85 hover:text-white hover:border-white hover:bg-white/10 hover:scale-110 transition-all duration-300 cursor-pointer backdrop-blur-sm';
+
+type Social = { Icon: typeof Facebook; label: string; href?: string; admin?: boolean };
+
+const SOCIALS: Social[] = [
   { Icon: Facebook, label: 'Facebook', href: 'https://facebook.com' },
   { Icon: Instagram, label: 'Instagram', href: 'https://instagram.com' },
   { Icon: Youtube, label: 'YouTube', href: 'https://youtube.com' },
   { Icon: Mail, label: 'Email us', href: 'mailto:gotoholidaysandvisa@gmail.com' },
-  { Icon: ShieldCheck, label: 'Verified & Secure', href: '#' },
+  { Icon: ShieldCheck, label: 'Admin sign in', admin: true },
 ];
 
-const SocialLink: React.FC<{ Icon: typeof Facebook; label: string; href: string }> = ({ Icon, label, href }) => (
-  <a
-    href={href}
-    aria-label={label}
-    {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-    onClick={href === '#' ? (e) => e.preventDefault() : undefined}
-    className="w-10 h-10 rounded-full border border-white/35 flex items-center justify-center text-white/85 hover:text-white hover:border-white hover:bg-white/10 hover:scale-110 transition-all duration-300 cursor-pointer backdrop-blur-sm"
-  >
-    <Icon className="w-[18px] h-[18px]" strokeWidth={1.9} />
-  </a>
-);
+const SocialLink: React.FC<Social & { onAdmin: () => void }> = ({ Icon, label, href, admin, onAdmin }) => {
+  const icon = <Icon className="w-[18px] h-[18px]" strokeWidth={1.9} />;
+  if (admin) {
+    return (
+      <button type="button" aria-label={label} onClick={onAdmin} className={SOCIAL_CLS}>
+        {icon}
+      </button>
+    );
+  }
+  return (
+    <a
+      href={href}
+      aria-label={label}
+      {...(href?.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      className={SOCIAL_CLS}
+    >
+      {icon}
+    </a>
+  );
+};
 
 export const HeroHome: React.FC<HeroHomeProps> = ({ onNavigate, onSelectDestination }) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -322,14 +336,14 @@ export const HeroHome: React.FC<HeroHomeProps> = ({ onNavigate, onSelectDestinat
       {/* Desktop: vertical social rail on the left */}
       <div className="hidden lg:flex flex-col gap-4 absolute left-3 xl:left-6 top-1/2 -translate-y-1/2 z-20">
         {SOCIALS.map((s) => (
-          <SocialLink key={s.label} {...s} />
+          <SocialLink key={s.label} {...s} onAdmin={() => onNavigate('admin')} />
         ))}
       </div>
 
       {/* Mobile: social row sitting just above the curved bottom */}
       <div className="lg:hidden absolute inset-x-0 bottom-24 z-20 flex justify-center gap-3">
         {SOCIALS.map((s) => (
-          <SocialLink key={s.label} {...s} />
+          <SocialLink key={s.label} {...s} onAdmin={() => onNavigate('admin')} />
         ))}
       </div>
 

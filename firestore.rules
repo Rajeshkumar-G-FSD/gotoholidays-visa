@@ -1,0 +1,72 @@
+rules_version = '2';
+
+// ---------------------------------------------------------------------------
+// Goto Holidays — Firestore security rules
+// Collection: /enquiries/{docId}
+// Record shape written by src/lib/enquiryStore.ts -> buildRecord():
+//   id, type ('visa' | 'travel'), createdAt (ISO string), name, email, phone,
+//   residence, contactMethod, subject, travelDate, travellers, raw (map)
+//
+// Two profiles below — keep ONE `match /enquiries` block, delete the other.
+//   A) RECOMMENDED  : public may CREATE only; admin (signed-in) may READ.
+//   B) QUICK TEST   : public may CREATE and READ (INSECURE — see warning).
+// ---------------------------------------------------------------------------
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===== shared validation =====
+    function validEnquiry(d) {
+      return d.keys().hasOnly(['id','type','createdAt','name','email','phone',
+                               'residence','contactMethod','subject','travelDate',
+                               'travellers','raw'])
+        && d.keys().hasAll(['id','type','createdAt','name','email','phone','raw'])
+        && (d.type == 'visa' || d.type == 'travel')
+        && d.id is string        && d.id.size() > 0    && d.id.size() < 200
+        && d.createdAt is string  && d.createdAt.size() < 40
+        && d.name is string       && d.name.size() > 0  && d.name.size() < 200
+        && d.email is string      && d.email.size() < 320
+        && d.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$')
+        && d.phone is string      && d.phone.size() > 0 && d.phone.size() < 40
+        && d.residence is string  && d.residence.size() < 200
+        && d.contactMethod is string && d.contactMethod.size() < 60
+        && d.subject is string    && d.subject.size() < 300
+        && d.travelDate is string && d.travelDate.size() < 40
+        && d.travellers is string && d.travellers.size() < 200
+        && d.raw is map           && d.raw.size() <= 80;
+    }
+
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'gotoholidaysvisa@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+
+    // ========================================================================
+    // A) RECOMMENDED
+    // ========================================================================
+    match /enquiries/{docId} {
+      allow create: if validEnquiry(request.resource.data);
+      allow read:   if isAdmin();
+      allow update, delete: if isAdmin();
+    }
+
+    // ========================================================================
+    // B) QUICK TEST  — WARNING: `read` is open, so ANYONE can list every
+    //    enquiry and see all guest names, emails and phone numbers.
+    //    Use only while testing; switch to profile A before launch.
+    //    Delete the profile-A block above and uncomment this one.
+    // ========================================================================
+    // match /enquiries/{docId} {
+    //   allow create: if validEnquiry(request.resource.data)
+    //                 && request.time < timestamp.date(2026, 12, 31);
+    //   allow read:   if request.time < timestamp.date(2026, 12, 31);
+    //   allow update, delete: if false;
+    // }
+
+    // Everything else is denied.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

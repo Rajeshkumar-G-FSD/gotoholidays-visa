@@ -134,6 +134,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div className="flex items-center gap-6">
             <span className="hover:text-slate-200 transition-colors cursor-pointer">Sitemap</span>
             <span className="hover:text-slate-200 transition-colors cursor-pointer">Press Inquiries</span>
+            <button
+              onClick={() => onNavigate('admin')}
+              className="uppercase tracking-[0.12em] text-slate-500 hover:text-slate-200 transition-colors cursor-pointer"
+            >
+              Admin
+            </button>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ActiveTab, Destination, TravelPackage, VisaRequirement, InquiryFormData, CustomPlanFormData, ToastMessage } from './types';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
@@ -11,7 +11,10 @@ import { GlobalPackagesSection } from './components/GlobalPackagesSection';
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { DiscoverPackagesPage } from './components/DiscoverPackagesPage';
 import { DestinationDetailPage } from './components/DestinationDetailPage';
+import { EnquiryPage, EnquiryTab } from './components/EnquiryPage';
+import { AdminPage } from './components/AdminPage';
 import { ScrollTopRail } from './components/ScrollTopRail';
+import { buildRecord, saveEnquiry } from './lib/enquiryStore';
 import { VisaRequirementsView } from './components/VisaRequirementsView';
 import { AboutUsView } from './components/AboutUsView';
 import { ContactView } from './components/ContactView';
@@ -24,6 +27,8 @@ import { ShieldCheck, Compass, Heart } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<ActiveTab>('home');
+  const [enquiryTab, setEnquiryTab] = useState<EnquiryTab>('travel');
+  const [enquiryPrefill, setEnquiryPrefill] = useState('');
   const [selectedDestinationId, setSelectedDestinationId] = useState<string | null>(null);
   const [selectedDestination, setSelectedDestination] = useState<Destination | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<TravelPackage | null>(null);
@@ -44,8 +49,19 @@ export const App: React.FC = () => {
 
   const handleNavigate = (tab: ActiveTab) => {
     setActiveTab(tab);
+    if (tab !== 'admin' && window.location.hash) window.location.hash = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // Open the admin console via #admin (e.g. bookmark) — front-of-site links never expose it.
+  useEffect(() => {
+    const sync = () => {
+      if (window.location.hash.replace('#', '') === 'admin') setActiveTab('admin');
+    };
+    sync();
+    window.addEventListener('hashchange', sync);
+    return () => window.removeEventListener('hashchange', sync);
+  }, []);
 
   const handlePlanTrip = (destinationOrCountryName?: string) => {
     setActiveTab('plan');
@@ -53,6 +69,29 @@ export const App: React.FC = () => {
     if (destinationOrCountryName) {
       addToast('Destination Pre-Selected', `Drafting custom itinerary for ${destinationOrCountryName}.`, 'info');
     }
+  };
+
+  const openEnquiry = (tab: EnquiryTab, prefill = '') => {
+    setEnquiryTab(tab);
+    setEnquiryPrefill(prefill);
+    setActiveTab('enquiry');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleEnquirySubmit = (tab: EnquiryTab, data: Record<string, string | string[]>) => {
+    void saveEnquiry(buildRecord(tab, data));
+    const who = typeof data.fullName === 'string' && data.fullName ? data.fullName.split(' ')[0] : 'there';
+    const subject =
+      tab === 'visa'
+        ? `${(data.visaCountry as string) || 'your'} visa`
+        : `${(data.destination as string) || 'your'} trip`;
+    addToast(
+      'Enquiry Received',
+      `Thank you ${who}! Our ${tab === 'visa' ? 'visa' : 'travel'} specialist will contact you about ${subject} within 24 hours.`,
+      'success'
+    );
+    setActiveTab('home');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBookPackage = (pkg: TravelPackage) => {
@@ -79,6 +118,16 @@ export const App: React.FC = () => {
     );
   };
 
+  // Admin console renders standalone — no marketing chrome.
+  if (activeTab === 'admin') {
+    return (
+      <>
+        <AdminPage onNavigate={handleNavigate} />
+        <Toast toasts={toasts} onDismiss={removeToast} />
+      </>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#f8fafc] text-[#0f172a] flex flex-col justify-between selection:bg-[#1e40af] selection:text-white">
       {/* Top Fixed Navigation */}
@@ -99,13 +148,13 @@ export const App: React.FC = () => {
 
             {/* Popular Visa Services */}
             <VisaServicesSection
-              onApply={(name) => handlePlanTrip(name)}
+              onApply={(name) => openEnquiry('visa', name)}
               onViewAll={() => handleNavigate('visa-services')}
             />
 
             {/* Tour Packages (also on the dedicated Packages page) */}
-            <ThailandPackagesSection onEnquire={(name) => handlePlanTrip(name)} />
-            <GlobalPackagesSection onSelect={(name) => handlePlanTrip(name)} />
+            <ThailandPackagesSection onEnquire={(name) => openEnquiry('travel', name)} />
+            <GlobalPackagesSection onSelect={(name) => openEnquiry('travel', name)} />
             <TestimonialsSection />
 
             {/* Core Values Quick Banner */}
@@ -160,14 +209,14 @@ export const App: React.FC = () => {
         {activeTab === 'visa-services' && (
           <VisaServicesPage
             onNavigate={handleNavigate}
-            onApply={(name) => handlePlanTrip(name)}
+            onApply={(name) => openEnquiry('visa', name)}
           />
         )}
 
         {activeTab === 'packages' && (
           <DiscoverPackagesPage
             onNavigate={handleNavigate}
-            onEnquire={(name) => handlePlanTrip(name)}
+            onEnquire={(name) => openEnquiry('travel', name)}
             onOpenDestination={(id) => {
               setSelectedDestinationId(id);
               setActiveTab('destination-detail');
@@ -180,7 +229,16 @@ export const App: React.FC = () => {
           <DestinationDetailPage
             destinationId={selectedDestinationId}
             onNavigate={handleNavigate}
-            onEnquire={(name) => handlePlanTrip(name)}
+            onEnquire={(name) => openEnquiry('travel', name)}
+          />
+        )}
+
+        {activeTab === 'enquiry' && (
+          <EnquiryPage
+            initialTab={enquiryTab}
+            prefill={enquiryPrefill}
+            onNavigate={handleNavigate}
+            onSubmit={handleEnquirySubmit}
           />
         )}
 

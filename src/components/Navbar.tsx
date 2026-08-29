@@ -24,6 +24,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
     { tab: 'destinations', label: 'Destinations' },
     { tab: 'visa-services', label: 'Visa Services' },
     { tab: 'packages', label: 'Packages' },
+    { tab: 'enquiry', label: 'Enquiry' },
     { tab: 'about', label: 'About Us' },
     { tab: 'contact', label: 'Contact' },
   ];
@@ -58,7 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
         </button>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-5 xl:gap-7">
           {navItems.map((item) => {
             const isActive = activeTab === item.tab;
             return (
@@ -85,14 +86,14 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
         <div className="flex items-center gap-4">
           <button
             id="nav-plan-trip-btn"
-            onClick={() => onNavigate('plan')}
+            onClick={() => onNavigate('enquiry')}
             className={`hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer shadow-md ${
-              activeTab === 'plan'
+              activeTab === 'enquiry'
                 ? 'bg-[#0f2b5c] text-white shadow-blue-900/30'
                 : 'bg-[#1e40af] hover:bg-[#1d4ed8] text-white hover:shadow-lg hover:shadow-blue-600/25 hover:scale-[1.02]'
             }`}
           >
-            <span>Plan Journey</span>
+            <span>Enquire Now</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </button>
 
@@ -101,7 +102,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
             id="nav-mobile-menu-btn"
             aria-label="Toggle menu"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden w-10 h-10 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-[#0f2b5c] hover:bg-blue-100 transition-colors"
+            className="lg:hidden w-10 h-10 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-[#0f2b5c] hover:bg-blue-100 transition-colors"
           >
             {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -110,7 +111,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
 
       {/* Mobile Drawer Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-blue-100 px-6 py-6 mt-3 space-y-4 shadow-xl animate-in slide-in-from-top-4 duration-300">
+        <div className="lg:hidden bg-white border-t border-blue-100 px-6 py-6 mt-3 space-y-4 shadow-xl animate-in slide-in-from-top-4 duration-300">
           <nav className="flex flex-col space-y-2">
             {navItems.map((item) => {
               const isActive = activeTab === item.tab;
@@ -135,12 +136,12 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
 
             <button
               onClick={() => {
-                onNavigate('plan');
+                onNavigate('enquiry');
                 setIsMobileMenuOpen(false);
               }}
               className="w-full mt-3 py-3 px-4 rounded-full bg-[#1e40af] hover:bg-[#1d4ed8] text-white text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-900/20"
             >
-              <span>Plan Custom Journey</span>
+              <span>Enquire Now</span>
               <ArrowUpRight className="w-4 h-4" />
             </button>
           </nav>
