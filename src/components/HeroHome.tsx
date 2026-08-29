@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { HERO_DESTINATIONS, HERO_BACKGROUND } from '../data/travelData';
 import { Destination, ActiveTab } from '../types';
-import { ArrowUpRight, MapPin, Eye } from 'lucide-react';
+import { ArrowUpRight, MapPin, Eye, Facebook, Instagram, Youtube, Mail, ShieldCheck } from 'lucide-react';
 
 interface HeroHomeProps {
   onNavigate: (tab: ActiveTab) => void;
@@ -23,6 +23,26 @@ const CIRCLE_LABELS: Record<string, string> = {
 };
 
 const pad = (n: number) => String(n).padStart(2, '0');
+
+const SOCIALS: { Icon: typeof Facebook; label: string; href: string }[] = [
+  { Icon: Facebook, label: 'Facebook', href: 'https://facebook.com' },
+  { Icon: Instagram, label: 'Instagram', href: 'https://instagram.com' },
+  { Icon: Youtube, label: 'YouTube', href: 'https://youtube.com' },
+  { Icon: Mail, label: 'Email us', href: 'mailto:gotoholidaysandvisa@gmail.com' },
+  { Icon: ShieldCheck, label: 'Verified & Secure', href: '#' },
+];
+
+const SocialLink: React.FC<{ Icon: typeof Facebook; label: string; href: string }> = ({ Icon, label, href }) => (
+  <a
+    href={href}
+    aria-label={label}
+    {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+    onClick={href === '#' ? (e) => e.preventDefault() : undefined}
+    className="w-10 h-10 rounded-full border border-white/35 flex items-center justify-center text-white/85 hover:text-white hover:border-white hover:bg-white/10 hover:scale-110 transition-all duration-300 cursor-pointer backdrop-blur-sm"
+  >
+    <Icon className="w-[18px] h-[18px]" strokeWidth={1.9} />
+  </a>
+);
 
 export const HeroHome: React.FC<HeroHomeProps> = ({ onNavigate, onSelectDestination }) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -55,7 +75,7 @@ export const HeroHome: React.FC<HeroHomeProps> = ({ onNavigate, onSelectDestinat
   return (
     <section
       id="hero-section"
-      className="relative min-h-screen w-full flex items-center overflow-hidden pt-28 pb-16 lg:pt-20 lg:pb-10"
+      className="relative min-h-screen w-full flex items-center overflow-hidden pt-28 pb-32 lg:pt-20 lg:pb-10"
     >
       {/* Rotating Background — cross-fade + slow Ken Burns zoom */}
       <div className="absolute inset-0 z-0">
@@ -253,15 +273,19 @@ export const HeroHome: React.FC<HeroHomeProps> = ({ onNavigate, onSelectDestinat
               <p className="text-[11px] uppercase tracking-widest text-[#93c5fd] font-bold mb-3">
                 Signature Destinations
               </p>
-              <div className="inline-flex max-w-full items-center gap-4 overflow-x-auto no-scrollbar rounded-3xl bg-[#0a192f]/55 backdrop-blur-md border border-white/15 shadow-xl px-4 py-4">
+              <div className="flex max-w-full items-center gap-4 overflow-x-auto no-scrollbar rounded-[2rem] bg-[#0a192f]/55 backdrop-blur-md border border-white/15 shadow-xl px-4 py-8">
                 {HERO_DESTINATIONS.map((dest, idx) => {
                   const isActive = idx === activeIndex;
+                  // Lay the circles along a gentle arc (centre circles ride higher).
+                  const t = (idx - mid) / mid;
+                  const arcY = -Math.round((1 - t * t) * 28);
                   return (
                     <button
                       key={dest.id}
                       onClick={() => selectIndex(idx)}
                       aria-label={`Show ${dest.name}, ${dest.country}`}
-                      className="group flex-shrink-0 flex flex-col items-center gap-2 cursor-pointer"
+                      style={{ transform: `translateY(${arcY}px)` }}
+                      className="group flex-shrink-0 flex flex-col items-center gap-2 cursor-pointer transition-transform duration-500"
                     >
                       <span
                         className={`relative rounded-full p-[3px] transition-all duration-300 ${
@@ -294,6 +318,30 @@ export const HeroHome: React.FC<HeroHomeProps> = ({ onNavigate, onSelectDestinat
           </div>
         </div>
       </div>
+
+      {/* Desktop: vertical social rail on the left */}
+      <div className="hidden lg:flex flex-col gap-4 absolute left-3 xl:left-6 top-1/2 -translate-y-1/2 z-20">
+        {SOCIALS.map((s) => (
+          <SocialLink key={s.label} {...s} />
+        ))}
+      </div>
+
+      {/* Mobile: social row sitting just above the curved bottom */}
+      <div className="lg:hidden absolute inset-x-0 bottom-24 z-20 flex justify-center gap-3">
+        {SOCIALS.map((s) => (
+          <SocialLink key={s.label} {...s} />
+        ))}
+      </div>
+
+      {/* Mobile: rounded / curved bottom edge instead of a straight cut */}
+      <svg
+        className="lg:hidden absolute inset-x-0 bottom-0 z-[1] w-full h-20"
+        viewBox="0 0 375 80"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path d="M0,80 L0,40 Q187.5,-18 375,40 L375,80 Z" fill="#ffffff" />
+      </svg>
     </section>
   );
 };

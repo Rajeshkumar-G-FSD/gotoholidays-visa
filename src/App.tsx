@@ -9,7 +9,9 @@ import { VisaServicesPage } from './components/VisaServicesPage';
 import { ThailandPackagesSection } from './components/ThailandPackagesSection';
 import { GlobalPackagesSection } from './components/GlobalPackagesSection';
 import { TestimonialsSection } from './components/TestimonialsSection';
-import { PackagesPage } from './components/PackagesPage';
+import { DiscoverPackagesPage } from './components/DiscoverPackagesPage';
+import { DestinationDetailPage } from './components/DestinationDetailPage';
+import { ScrollTopRail } from './components/ScrollTopRail';
 import { VisaRequirementsView } from './components/VisaRequirementsView';
 import { AboutUsView } from './components/AboutUsView';
 import { ContactView } from './components/ContactView';
@@ -22,6 +24,7 @@ import { ShieldCheck, Compass, Heart } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<ActiveTab>('home');
+  const [selectedDestinationId, setSelectedDestinationId] = useState<string | null>(null);
   const [selectedDestination, setSelectedDestination] = useState<Destination | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<TravelPackage | null>(null);
   const [selectedVisa, setSelectedVisa] = useState<VisaRequirement | null>(null);
@@ -162,7 +165,20 @@ export const App: React.FC = () => {
         )}
 
         {activeTab === 'packages' && (
-          <PackagesPage
+          <DiscoverPackagesPage
+            onNavigate={handleNavigate}
+            onEnquire={(name) => handlePlanTrip(name)}
+            onOpenDestination={(id) => {
+              setSelectedDestinationId(id);
+              setActiveTab('destination-detail');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        )}
+
+        {activeTab === 'destination-detail' && (
+          <DestinationDetailPage
+            destinationId={selectedDestinationId}
             onNavigate={handleNavigate}
             onEnquire={(name) => handlePlanTrip(name)}
           />
@@ -205,6 +221,9 @@ export const App: React.FC = () => {
         onClose={() => setSelectedVisa(null)}
         onPlanTrip={(countryName) => handlePlanTrip(countryName)}
       />
+
+      {/* Scroll-to-top rail */}
+      <ScrollTopRail />
 
       {/* Toast Notifications */}
       <Toast toasts={toasts} onDismiss={removeToast} />

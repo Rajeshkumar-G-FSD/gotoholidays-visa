@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ActiveTab } from '../types';
-import { Menu, X, Compass, ArrowUpRight } from 'lucide-react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 
 interface NavbarProps {
   activeTab: ActiveTab;
@@ -45,14 +45,16 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
             onNavigate('home');
             setIsMobileMenuOpen(false);
           }}
-          className="flex items-center gap-2.5 text-left group cursor-pointer"
+          aria-label="Goto Holidays — home"
+          className="group cursor-pointer shrink-0"
         >
-          <div className="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center border border-blue-200 group-hover:border-[#1e40af] group-hover:bg-[#1e40af] transition-all duration-300 shadow-sm">
-            <Compass className="w-5 h-5 text-[#1e40af] group-hover:text-white group-hover:rotate-45 transition-all duration-300" />
-          </div>
-          <span className="text-xl sm:text-2xl font-bold tracking-tight text-[#0f2b5c] group-hover:text-[#1e40af] transition-colors font-manrope">
-            Goto Holidays
-          </span>
+          <img
+            src="/images/goto_holidays.png"
+            alt="Goto Holidays"
+            className={`w-auto object-contain transition-all duration-300 group-hover:scale-105 ${
+              isScrolled ? 'h-12 sm:h-14' : 'h-14 sm:h-16 lg:h-20'
+            }`}
+          />
         </button>
 
         {/* Desktop Navigation */}

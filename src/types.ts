@@ -3,6 +3,7 @@ export type ActiveTab =
   | 'destinations'
   | 'visa-services'
   | 'packages'
+  | 'destination-detail'
   | 'about'
   | 'contact'
   | 'plan';
@@ -39,6 +40,30 @@ export interface Testimonial {
   name: string;
   role: string;
   avatar: string;
+}
+
+export interface RoadmapStop {
+  day: string;
+  title: string;
+  desc: string;
+  image: string;
+}
+
+export interface DestinationPackage {
+  id: string;
+  name: string;
+  flag: string;
+  tagline: string;
+  description: string;
+  originalPrice: number;
+  price: number;
+  nights: number;
+  days: number;
+  bestTime: string;
+  currency: string;
+  visa: string;
+  heroImage: string;
+  roadmap: RoadmapStop[];
 }
 
 export interface Destination {

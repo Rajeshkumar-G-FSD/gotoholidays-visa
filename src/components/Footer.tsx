@@ -1,5 +1,5 @@
 import React from 'react';
-import { Compass, Instagram, Youtube, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import { Instagram, Youtube, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import { ActiveTab } from '../types';
 
 interface FooterProps {
@@ -24,12 +24,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div className="lg:col-span-4 space-y-5">
             <button
               onClick={() => onNavigate('home')}
-              className="flex items-center gap-2.5 cursor-pointer group"
+              aria-label="Goto Holidays — home"
+              className="cursor-pointer group"
             >
-              <span className="w-9 h-9 rounded-full bg-blue-600/25 border border-blue-400/40 flex items-center justify-center">
-                <Compass className="w-5 h-5 text-blue-300 group-hover:rotate-45 transition-transform" />
-              </span>
-              <span className="text-xl font-bold tracking-tight text-white font-manrope">Goto Holidays</span>
+              <img
+                src="/images/goto_holidays.png"
+                alt="Goto Holidays"
+                className="h-24 sm:h-28 w-auto object-contain transition-transform group-hover:scale-105"
+              />
             </button>
             <p className="text-sm leading-relaxed text-slate-400 max-w-xs">
               Elevating global travel to an art form for the discerning few. Redefining luxury for the modern
