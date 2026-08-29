@@ -1,74 +1,120 @@
-import React, { useState } from 'react';
-import { DESTINATIONS, HERO_BACKGROUND } from '../data/travelData';
+import React, { useEffect, useState } from 'react';
+import { HERO_DESTINATIONS, HERO_BACKGROUND } from '../data/travelData';
 import { Destination, ActiveTab } from '../types';
-import { ArrowUpRight, MapPin, Sparkles, Compass, Eye } from 'lucide-react';
+import { ArrowUpRight, MapPin, Eye } from 'lucide-react';
 
 interface HeroHomeProps {
   onNavigate: (tab: ActiveTab) => void;
   onSelectDestination: (dest: Destination) => void;
 }
 
-export const HeroHome: React.FC<HeroHomeProps> = ({ onNavigate, onSelectDestination }) => {
-  const [selectedDestId, setSelectedDestId] = useState<string>('lago-di-braies');
+const ROTATE_INTERVAL = 3000;
 
-  const activeDest = DESTINATIONS.find((d) => d.id === selectedDestId) || DESTINATIONS[2];
+// Short place labels shown beneath each circle on mobile.
+const CIRCLE_LABELS: Record<string, string> = {
+  maldives: 'Maldives',
+  dubai: 'Dubai',
+  thailand: 'Thailand',
+  malaysia: 'Malaysia',
+  andaman: 'Andaman',
+  singapore: 'Singapore',
+  lakshadweep: 'Lakshadweep',
+  srilanka: 'Sri Lanka',
+};
+
+const pad = (n: number) => String(n).padStart(2, '0');
+
+export const HeroHome: React.FC<HeroHomeProps> = ({ onNavigate, onSelectDestination }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  const total = HERO_DESTINATIONS.length;
+  const activeDest = HERO_DESTINATIONS[activeIndex];
+  const mid = (total - 1) / 2;
+
+  // Auto-advance the featured destination every 3 seconds.
+  useEffect(() => {
+    if (paused) return;
+    const id = setInterval(() => {
+      setActiveIndex((i) => (i + 1) % total);
+    }, ROTATE_INTERVAL);
+    return () => clearInterval(id);
+  }, [paused, total]);
+
+  const selectIndex = (idx: number) => {
+    setActiveIndex(idx);
+    // Briefly pause so a manual pick isn't instantly overridden by the timer.
+    setPaused(true);
+    window.setTimeout(() => setPaused(false), ROTATE_INTERVAL * 2);
+  };
+
+  // Progress-ring geometry for the active thumbnail.
+  const R = 66;
+  const CIRC = 2 * Math.PI * R;
 
   return (
     <section
       id="hero-section"
-      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden pt-28 pb-16 lg:py-0"
+      className="relative min-h-screen w-full flex items-center overflow-hidden pt-28 pb-16 lg:pt-20 lg:pb-10"
     >
-      {/* Background Image with Royal Sapphire & Dark Vignette Overlay */}
+      {/* Rotating Background — cross-fade + slow Ken Burns zoom */}
       <div className="absolute inset-0 z-0">
-        <img
-          src={activeDest.heroBgUrl || HERO_BACKGROUND}
-          alt={activeDest.name}
-          className="w-full h-full object-cover object-center transition-all duration-700 scale-105"
-          referrerPolicy="no-referrer"
-        />
-        {/* Majestic Royal Sapphire Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a192f]/92 via-[#0f2b5c]/70 to-[#071326]/85" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#f8fafc] via-transparent to-[#0a192f]/40" />
+        {HERO_DESTINATIONS.map((dest, idx) => {
+          const isActive = idx === activeIndex;
+          return (
+            <div
+              key={dest.id}
+              className={`absolute inset-0 transition-opacity duration-[900ms] ease-in-out ${
+                isActive ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              <img
+                src={dest.heroBgUrl || HERO_BACKGROUND}
+                alt={dest.name}
+                className={`w-full h-full object-cover object-center ${
+                  isActive ? 'animate-kenburns' : 'scale-105'
+                }`}
+                referrerPolicy="no-referrer"
+              />
+            </div>
+          );
+        })}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a192f]/92 via-[#0f2b5c]/68 to-[#071326]/82" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#f8fafc]/70 via-transparent to-[#0a192f]/45" />
       </div>
 
-      {/* Hero Content Container */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-12 lg:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          
-          {/* Left Column: Hero Text & CTA */}
-          <div className="lg:col-span-7 space-y-6 sm:space-y-8 text-left">
-            
-            {/* Announcement Pill */}
-            <div
-              id="hero-announcement-pill"
-              className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-[#0a192f]/80 backdrop-blur-md text-white text-xs sm:text-sm font-medium tracking-wide shadow-xl border border-blue-300/30 animate-fade-in"
-            >
-              <span className="bg-[#1e40af] text-white px-2.5 py-0.5 rounded-full text-xs font-bold tracking-wider uppercase flex items-center gap-1 shadow-sm">
-                <Sparkles className="w-3 h-3 text-[#d4af37]" />
-                New
-              </span>
-              <span className="text-blue-100">Travel Beyond Expectations</span>
+      {/* Hero Content */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-12 lg:py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 items-center">
+          {/* Left Column: minimal — just the live caption for the image behind + actions */}
+          <div className="lg:col-span-6 text-left">
+            <div key={activeDest.id} className="animate-hero-rise space-y-3">
+              <p className="text-[11px] sm:text-xs uppercase tracking-[0.3em] text-[#93c5fd] font-bold flex items-center gap-3">
+                Now Exploring
+                <span className="text-white/70 tracking-widest">
+                  {pad(activeIndex + 1)} <span className="text-white/30">/</span> {pad(total)}
+                </span>
+              </p>
+
+              <h1
+                id="hero-headline"
+                className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-normal tracking-tight text-white font-playfair italic leading-[1.05] text-glow drop-shadow-xl"
+              >
+                {activeDest.name}
+              </h1>
+
+              <p className="flex items-center gap-2 text-sm sm:text-base text-slate-100 font-manrope drop-shadow">
+                <MapPin className="w-4 h-4 text-[#60a5fa]" />
+                <span className="font-semibold">{activeDest.location}</span>
+                <span className="text-blue-200">· {activeDest.country}</span>
+                <span className="ml-1 text-[11px] uppercase tracking-widest text-[#93c5fd] font-bold">
+                  {activeDest.tag}
+                </span>
+              </p>
             </div>
 
-            {/* Main Headline */}
-            <h1
-              id="hero-headline"
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal tracking-tight text-white font-playfair italic leading-[1.1] text-glow drop-shadow-lg"
-            >
-              Travel Beyond <br />
-              <span className="not-italic font-playfair font-normal">the Ordinary</span>
-            </h1>
-
-            {/* Subtitle description */}
-            <p
-              id="hero-description"
-              className="text-base sm:text-lg text-slate-100 max-w-xl font-normal leading-relaxed font-manrope drop-shadow-md"
-            >
-              Explore extraordinary places, compare travel options, and uncover experiences that match your travel style. Travel smarter, discover more, and make every moment count.
-            </p>
-
-            {/* Actions Button */}
-            <div className="pt-2 flex flex-wrap items-center gap-4">
+            {/* Actions */}
+            <div className="pt-8 flex flex-wrap items-center gap-4">
               <button
                 id="hero-cta-button"
                 onClick={() => onNavigate('destinations')}
@@ -82,128 +128,170 @@ export const HeroHome: React.FC<HeroHomeProps> = ({ onNavigate, onSelectDestinat
 
               <button
                 id="hero-plan-button"
-                onClick={() => onNavigate('plan')}
+                onClick={() => onSelectDestination(activeDest)}
                 className="inline-flex items-center gap-2 px-6 py-4 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/30 text-white text-sm font-semibold transition-all cursor-pointer shadow-lg hover:scale-[1.02]"
               >
-                <span>Curate Custom Itinerary</span>
-                <Compass className="w-4 h-4 text-[#60a5fa]" />
-              </button>
-            </div>
-
-            {/* Active Destination Quick Info Bar (Desktop & Mobile) */}
-            <div className="pt-4 flex items-center gap-4 text-xs sm:text-sm text-slate-200">
-              <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#0a192f]/80 backdrop-blur-md border border-blue-300/30 shadow-md">
-                <MapPin className="w-3.5 h-3.5 text-[#60a5fa]" />
-                <span className="font-semibold text-white">{activeDest.name}</span>
-                <span className="text-blue-200 font-normal">({activeDest.country})</span>
-              </div>
-              <button
-                onClick={() => onSelectDestination(activeDest)}
-                className="text-[#93c5fd] hover:text-white hover:underline flex items-center gap-1.5 cursor-pointer font-semibold transition-colors"
-              >
-                <Eye className="w-3.5 h-3.5" /> View Destination Guide
+                <Eye className="w-4 h-4 text-[#60a5fa]" />
+                <span>View Destination Guide</span>
               </button>
             </div>
           </div>
 
-          {/* Right Column: Circular Destination Gallery (Interactive Arc Layout) */}
-          <div className="lg:col-span-5 w-full">
-            
-            {/* Desktop Curved Vertical Carousel Layout */}
-            <div className="hidden lg:flex flex-col items-end space-y-4 relative py-6">
-              <div className="text-right mb-2 bg-[#0a192f]/70 backdrop-blur-md px-4 py-1.5 rounded-full border border-blue-400/20 shadow-md">
-                <p className="text-[11px] uppercase tracking-widest text-[#93c5fd] font-bold">Featured Highlights</p>
-                <p className="text-xs text-white/80">Click thumbnail to preview</p>
-              </div>
-
-              {DESTINATIONS.map((dest, idx) => {
-                const isSelected = dest.id === selectedDestId;
-                // Horizontal offset to create the elegant curved arc effect from the design
-                const offsets = ['mr-0', 'mr-8', 'mr-16', 'mr-8', 'mr-0'];
-                const offsetClass = offsets[idx % offsets.length];
-
+          {/* Right Column: Interactive Curved Arc Gallery */}
+          <div className="lg:col-span-6 w-full">
+            {/* Desktop: vertical staggered arc, labels to the left of each circle */}
+            <div
+              className="hidden lg:flex flex-col items-end gap-2.5 xl:gap-3 relative pr-2"
+              onMouseEnter={() => setPaused(true)}
+              onMouseLeave={() => setPaused(false)}
+            >
+              {HERO_DESTINATIONS.map((dest, idx) => {
+                const isActive = idx === activeIndex;
+                // Curved arc: centre circles sit farther right, the ends pull left.
+                const offset = Math.round(Math.abs(idx - mid) * 26);
                 return (
                   <div
                     key={dest.id}
-                    className={`flex items-center gap-4 transition-all duration-300 ${offsetClass}`}
+                    className="flex items-center justify-end gap-4 xl:gap-5 w-full transition-all duration-500 ease-out"
+                    style={{ marginRight: offset }}
                   >
-                    {/* Destination Label when selected/hovered */}
-                    {isSelected && (
-                      <div className="bg-[#0a192f]/90 backdrop-blur-lg px-4 py-2.5 rounded-2xl text-right animate-in fade-in slide-in-from-right-4 duration-300 shadow-2xl border border-blue-400/40">
-                        <p className="text-xs text-[#93c5fd] font-bold uppercase tracking-wider">{dest.tag || 'Explore'}</p>
-                        <h4 className="text-sm font-bold text-white leading-snug">{dest.name}</h4>
-                        <p className="text-xs text-slate-300">{dest.location}, {dest.country}</p>
-                      </div>
-                    )}
-
-                    {/* Circular Image Thumbnail Button */}
+                    {/* Label */}
                     <button
-                      id={`hero-dest-circle-${dest.id}`}
-                      onClick={() => {
-                        setSelectedDestId(dest.id);
-                        onSelectDestination(dest);
-                      }}
-                      className={`relative group rounded-full p-1 transition-all duration-300 cursor-pointer ${
-                        isSelected
-                          ? 'ring-4 ring-[#60a5fa] scale-110 shadow-[0_0_25px_rgba(96,165,250,0.7)]'
-                          : 'ring-2 ring-white/50 hover:ring-2 hover:ring-white hover:scale-105 opacity-90 hover:opacity-100'
+                      onClick={() => selectIndex(idx)}
+                      className={`text-right cursor-pointer transition-all duration-300 ${
+                        isActive ? 'opacity-100' : 'opacity-75 hover:opacity-100'
                       }`}
                     >
-                      <div className="w-16 h-16 xl:w-20 xl:h-20 rounded-full overflow-hidden relative shadow-lg">
-                        <img
-                          src={dest.imageUrl}
-                          alt={dest.name}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                          referrerPolicy="no-referrer"
-                        />
-                        <div className="absolute inset-0 bg-[#0a192f]/20 group-hover:bg-transparent transition-colors" />
-                      </div>
+                      <h4
+                        className={`font-playfair italic text-white leading-tight transition-all duration-300 drop-shadow-[0_2px_10px_rgba(0,0,0,0.75)] ${
+                          isActive ? 'text-2xl xl:text-[26px]' : 'text-base xl:text-lg'
+                        }`}
+                      >
+                        {dest.name}
+                      </h4>
+                      <p
+                        className={`font-manrope text-slate-100 transition-all duration-300 drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)] ${
+                          isActive ? 'text-sm' : 'text-[11px] xl:text-xs'
+                        }`}
+                      >
+                        {dest.location}, {dest.country}
+                      </p>
+                    </button>
+
+                    {/* Circular thumbnail */}
+                    <button
+                      id={`hero-dest-circle-${dest.id}`}
+                      onClick={() => selectIndex(idx)}
+                      aria-label={`Show ${dest.name}, ${dest.country}`}
+                      className="relative flex-shrink-0 cursor-pointer"
+                    >
+                      <span
+                        className={`block rounded-full p-[3px] transition-all duration-500 ease-out ${
+                          isActive
+                            ? 'ring-2 ring-white/60 animate-soft-pulse'
+                            : 'ring-2 ring-white/40 hover:ring-white/80 opacity-90 hover:opacity-100'
+                        }`}
+                      >
+                        <span
+                          className={`block rounded-full overflow-hidden bg-[#0a192f] transition-all duration-500 ease-out ${
+                            isActive
+                              ? 'w-[104px] h-[104px] xl:w-[124px] xl:h-[124px]'
+                              : 'w-16 h-16 xl:w-[76px] xl:h-[76px]'
+                          }`}
+                        >
+                          <img
+                            src={dest.imageUrl}
+                            alt={dest.name}
+                            className={`w-full h-full object-cover transition-transform duration-[3000ms] ease-out ${
+                              isActive ? 'scale-110' : 'scale-100'
+                            }`}
+                            referrerPolicy="no-referrer"
+                          />
+                        </span>
+                      </span>
+
+                      {/* 3-second progress ring around the active thumbnail */}
+                      {isActive && (
+                        <svg
+                          key={activeIndex}
+                          className="absolute inset-0 m-auto -rotate-90 pointer-events-none"
+                          width="100%"
+                          height="100%"
+                          viewBox="0 0 140 140"
+                        >
+                          <circle
+                            className="ring-progress"
+                            cx="70"
+                            cy="70"
+                            r={R}
+                            fill="none"
+                            stroke="#60a5fa"
+                            strokeWidth="4"
+                            strokeLinecap="round"
+                            strokeDasharray={CIRC}
+                            style={
+                              {
+                                '--circ': CIRC,
+                                animationPlayState: paused ? 'paused' : 'running',
+                              } as React.CSSProperties
+                            }
+                          />
+                        </svg>
+                      )}
                     </button>
                   </div>
                 );
               })}
             </div>
 
-            {/* Mobile / Tablet Responsive Horizontal Carousel */}
-            <div className="lg:hidden w-full pt-6">
-              <div className="flex items-center justify-between mb-3 px-1">
-                <span className="text-xs uppercase tracking-wider text-white font-bold bg-[#0a192f]/80 px-3 py-1 rounded-full border border-blue-300/30">
-                  Featured Destinations
-                </span>
-                <span className="text-xs text-blue-200">Swipe to discover</span>
-              </div>
-              <div className="flex items-center gap-4 overflow-x-auto pb-4 pt-1 no-scrollbar scroll-smooth">
-                {DESTINATIONS.map((dest) => {
-                  const isSelected = dest.id === selectedDestId;
+            {/* Mobile / Tablet: frosted horizontal carousel */}
+            <div
+              className="lg:hidden w-full pt-2"
+              onMouseEnter={() => setPaused(true)}
+              onMouseLeave={() => setPaused(false)}
+            >
+              <p className="text-[11px] uppercase tracking-widest text-[#93c5fd] font-bold mb-3">
+                Signature Destinations
+              </p>
+              <div className="inline-flex max-w-full items-center gap-4 overflow-x-auto no-scrollbar rounded-3xl bg-[#0a192f]/55 backdrop-blur-md border border-white/15 shadow-xl px-4 py-4">
+                {HERO_DESTINATIONS.map((dest, idx) => {
+                  const isActive = idx === activeIndex;
                   return (
                     <button
                       key={dest.id}
-                      onClick={() => {
-                        setSelectedDestId(dest.id);
-                        onSelectDestination(dest);
-                      }}
-                      className={`flex-shrink-0 flex items-center gap-3 p-2.5 rounded-2xl bg-[#0a192f]/85 backdrop-blur-md text-left transition-all duration-200 cursor-pointer shadow-xl ${
-                        isSelected ? 'border-[#60a5fa] ring-2 ring-[#60a5fa]' : 'border border-white/20'
-                      }`}
+                      onClick={() => selectIndex(idx)}
+                      aria-label={`Show ${dest.name}, ${dest.country}`}
+                      className="group flex-shrink-0 flex flex-col items-center gap-2 cursor-pointer"
                     >
-                      <img
-                        src={dest.imageUrl}
-                        alt={dest.name}
-                        className="w-14 h-14 rounded-full object-cover border border-white/30"
-                        referrerPolicy="no-referrer"
-                      />
-                      <div className="pr-3">
-                        <h4 className="text-sm font-bold text-white leading-tight">{dest.name}</h4>
-                        <p className="text-xs text-slate-300">{dest.country}</p>
-                      </div>
+                      <span
+                        className={`relative rounded-full p-[3px] transition-all duration-300 ${
+                          isActive
+                            ? 'ring-4 ring-[#60a5fa] scale-110 shadow-[0_0_22px_rgba(96,165,250,0.65)]'
+                            : 'ring-2 ring-white/40 opacity-80'
+                        }`}
+                      >
+                        <span className="block w-14 h-14 rounded-full overflow-hidden">
+                          <img
+                            src={dest.imageUrl}
+                            alt={dest.name}
+                            className="w-full h-full object-cover"
+                            referrerPolicy="no-referrer"
+                          />
+                        </span>
+                      </span>
+                      <span
+                        className={`text-[11px] font-semibold tracking-wide whitespace-nowrap ${
+                          isActive ? 'text-white' : 'text-slate-200/80'
+                        }`}
+                      >
+                        {CIRCLE_LABELS[dest.id] || dest.country}
+                      </span>
                     </button>
                   );
                 })}
               </div>
             </div>
-
           </div>
-
         </div>
       </div>
     </section>

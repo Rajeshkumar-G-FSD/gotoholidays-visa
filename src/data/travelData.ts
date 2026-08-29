@@ -80,6 +80,141 @@ export const DESTINATIONS: Destination[] = [
   }
 ];
 
+// Signature spotlight destinations shown in the Home hero rotating gallery.
+const HERO_IMG = '?w=480&h=480&fit=crop&q=80&auto=format';
+const HERO_BG = '?w=2000&h=1300&fit=crop&q=80&auto=format';
+
+export const HERO_DESTINATIONS: Destination[] = [
+  {
+    id: 'maldives',
+    name: 'Maldives',
+    location: 'North Malé Atoll',
+    country: 'Maldives',
+    region: 'Asia Pacific',
+    description: 'Overwater villas suspended above impossibly clear turquoise lagoons.',
+    fullStory:
+      'The Maldives is a scattering of 1,000+ coral islands ringed by house reefs and powder-soft sandbanks. Days drift between glass-floor overwater suites, dawn dolphin cruises, and candlelit dinners on private sandbars under the Indian Ocean sky.',
+    imageUrl: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8' + HERO_IMG,
+    heroBgUrl: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8' + HERO_BG,
+    highlights: ['Private overwater pool villas', 'Snorkelling with manta rays', 'Sandbank sunset dining'],
+    bestTimeToVisit: 'November – April',
+    avgCost: '$3,600 / person',
+    tag: 'Overwater Serenity',
+  },
+  {
+    id: 'dubai',
+    name: 'Dubai',
+    location: 'Downtown & Desert',
+    country: 'UAE',
+    region: 'Middle East',
+    description: 'A futuristic skyline rising from golden desert dunes.',
+    fullStory:
+      'Dubai fuses record-breaking architecture with old-world Arabian charm. Ascend the Burj Khalifa at dusk, drift over the dunes in a hot-air balloon, dine in the desert, then wander the gold and spice souks of Deira.',
+    imageUrl: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c' + HERO_IMG,
+    heroBgUrl: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c' + HERO_BG,
+    highlights: ['Burj Khalifa observation deck', 'Red-dune desert safari', 'Marina yacht brunch'],
+    bestTimeToVisit: 'November – March',
+    avgCost: '$2,900 / person',
+    tag: 'City of Gold',
+  },
+  {
+    id: 'thailand',
+    name: 'Krabi & Phi Phi',
+    location: 'Andaman Coast',
+    country: 'Thailand',
+    region: 'Asia Pacific',
+    description: 'Longtail boats, limestone karsts, and warm emerald water.',
+    fullStory:
+      'Thailand’s Andaman coast is a maze of jade sea and jungle-topped cliffs. Island-hop by longtail from Railay to Phi Phi, kayak hidden lagoons, and end each day with fire shows and pad thai on the sand.',
+    imageUrl: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a' + HERO_IMG,
+    heroBgUrl: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a' + HERO_BG,
+    highlights: ['Maya Bay & Pileh Lagoon cruise', 'Railay rock climbing', 'Night markets in Krabi Town'],
+    bestTimeToVisit: 'November – April',
+    avgCost: '$1,900 / person',
+    tag: 'Andaman Bliss',
+  },
+  {
+    id: 'malaysia',
+    name: 'Kuala Lumpur',
+    location: 'City Centre',
+    country: 'Malaysia',
+    region: 'Asia Pacific',
+    description: 'The glittering Petronas Twin Towers over a lush skyline.',
+    fullStory:
+      'Kuala Lumpur is Southeast Asia at full volume — the Petronas Towers, Batu Caves’ rainbow steps, hawker-stall feasts in Jalan Alor, and rooftop infinity pools facing the city lights.',
+    imageUrl: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07' + HERO_IMG,
+    heroBgUrl: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07' + HERO_BG,
+    highlights: ['Petronas Towers skybridge', 'Batu Caves day trip', 'Jalan Alor street food'],
+    bestTimeToVisit: 'May – July, December',
+    avgCost: '$1,700 / person',
+    tag: 'Twin Towers Skyline',
+  },
+  {
+    id: 'andaman',
+    name: 'Havelock Island',
+    location: 'Andaman Islands',
+    country: 'India',
+    region: 'Asia Pacific',
+    description: 'Radhanagar Beach — white sand curving into a calm blue bay.',
+    fullStory:
+      'The Andaman Islands feel gloriously remote: Radhanagar’s Blue-Flag sand, elephant swims at dawn, and some of Asia’s best beginner scuba on untouched reefs off Havelock and Neil Island.',
+    imageUrl: 'https://images.unsplash.com/photo-1599325601183-042bed55081c' + HERO_IMG,
+    heroBgUrl: 'https://images.unsplash.com/photo-1599325601183-042bed55081c' + HERO_BG,
+    highlights: ['Radhanagar Beach sunsets', 'Discover-scuba at Elephant Beach', 'Bioluminescence night kayak'],
+    bestTimeToVisit: 'October – May',
+    avgCost: '$1,500 / person',
+    tag: 'Radhanagar Shores',
+  },
+  {
+    id: 'singapore',
+    name: 'Marina Bay',
+    location: 'Downtown Core',
+    country: 'Singapore',
+    region: 'Asia Pacific',
+    description: 'Marina Bay Sands, Gardens by the Bay, and a spotless skyline.',
+    fullStory:
+      'Singapore packs a continent of food and design into one island. Watch the Supertree light show, hawker-hop from Michelin chicken rice to chilli crab, and swim the SkyPark infinity edge above the bay.',
+    imageUrl: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd' + HERO_IMG,
+    heroBgUrl: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd' + HERO_BG,
+    highlights: ['Gardens by the Bay light show', 'SkyPark infinity pool', 'Hawker-centre food crawl'],
+    bestTimeToVisit: 'February – April',
+    avgCost: '$2,200 / person',
+    tag: 'Garden Metropolis',
+  },
+  {
+    id: 'lakshadweep',
+    name: 'Agatti Island',
+    location: 'Lakshadweep Archipelago',
+    country: 'India',
+    region: 'Asia Pacific',
+    description: 'A slender coral islet wrapped in a glowing turquoise lagoon.',
+    fullStory:
+      'Lakshadweep is India’s best-kept secret — 36 coral atolls with strict visitor limits. Agatti and Bangaram offer lagoon kayaking, reef snorkelling straight off the beach, and nights with nothing but stars.',
+    imageUrl: 'https://images.unsplash.com/photo-1572431447238-425af66a273b' + HERO_IMG,
+    heroBgUrl: 'https://images.unsplash.com/photo-1572431447238-425af66a273b' + HERO_BG,
+    highlights: ['Lagoon kayaking & glass-bottom boats', 'Reef snorkelling off the sand', 'Permit-only exclusivity'],
+    bestTimeToVisit: 'October – March',
+    avgCost: '$1,800 / person',
+    tag: 'Coral Lagoon',
+  },
+  {
+    id: 'srilanka',
+    name: 'Sigiriya',
+    location: 'Cultural Triangle',
+    country: 'Sri Lanka',
+    region: 'Asia Pacific',
+    description: 'The ancient Lion Rock fortress rising from emerald jungle.',
+    fullStory:
+      'Sri Lanka layers 2,000 years of history over one small island. Climb Sigiriya at sunrise, ride the misty hill-country train to Ella, safari for leopards in Yala, then unwind on the southern beaches of Mirissa.',
+    imageUrl: 'https://images.unsplash.com/photo-1612862862126-865765df2ded' + HERO_IMG,
+    heroBgUrl: 'https://images.unsplash.com/photo-1612862862126-865765df2ded' + HERO_BG,
+    highlights: ['Sunrise climb up Lion Rock', 'Kandy–Ella hill-country train', 'Yala leopard safari'],
+    bestTimeToVisit: 'December – March',
+    avgCost: '$1,600 / person',
+    tag: 'Ancient Rock Kingdom',
+  },
+];
+
 export const TRAVEL_PACKAGES: TravelPackage[] = [
   {
     id: 'alpine-serenity-retreat',

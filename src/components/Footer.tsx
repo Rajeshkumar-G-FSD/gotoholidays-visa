@@ -18,7 +18,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <Compass className="w-5 h-5 text-blue-300" />
               </div>
               <span className="text-2xl font-bold tracking-tight text-white font-manrope">
-                Logoipsum
+                Goto Holidays
               </span>
             </div>
             <p className="text-sm leading-relaxed text-slate-300 max-w-sm">
@@ -130,7 +130,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
         {/* Bottom Bar */}
         <div className="border-t border-blue-900/60 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <p>© {new Date().getFullYear()} Logoipsum Travel. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Goto Holidays. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <span className="hover:text-white transition-colors cursor-pointer">Privacy Policy</span>
             <span className="hover:text-white transition-colors cursor-pointer">Terms of Service</span>

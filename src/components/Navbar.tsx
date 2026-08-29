@@ -22,7 +22,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
   const navItems: { tab: ActiveTab; label: string }[] = [
     { tab: 'home', label: 'Home' },
     { tab: 'destinations', label: 'Destinations' },
-    { tab: 'packages', label: 'Travel Packages' },
+    { tab: 'packages', label: 'Packages' },
     { tab: 'about', label: 'About Us' },
     { tab: 'contact', label: 'Contact' },
   ];
@@ -50,7 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
             <Compass className="w-5 h-5 text-[#1e40af] group-hover:text-white group-hover:rotate-45 transition-all duration-300" />
           </div>
           <span className="text-xl sm:text-2xl font-bold tracking-tight text-[#0f2b5c] group-hover:text-[#1e40af] transition-colors font-manrope">
-            Logoipsum
+            Goto Holidays
           </span>
         </button>
 
