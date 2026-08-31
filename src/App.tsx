@@ -130,7 +130,7 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-[#0f172a] flex flex-col justify-between selection:bg-[#1e40af] selection:text-white">
+    <div className="min-h-screen bg-[#f8fafc] text-[#0f172a] flex flex-col justify-between overflow-x-hidden selection:bg-[#1e40af] selection:text-white">
       {/* Top Fixed Navigation */}
       <Navbar activeTab={activeTab} onNavigate={handleNavigate} />
 

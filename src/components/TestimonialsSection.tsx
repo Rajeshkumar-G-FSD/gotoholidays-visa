@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Star, Quote } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import { TESTIMONIALS } from '../data/travelData';
 import { Testimonial } from '../types';
 import BlurText from './BlurText';
@@ -70,9 +71,87 @@ const ReviewCard: React.FC<{ t: Testimonial; clamp?: number }> = ({ t, clamp }) 
   </div>
 );
 
+/** Mobile: one full-width review card that flips like a page turn. */
+const MobileReviewFlip: React.FC<{ reviews: Testimonial[] }> = ({ reviews }) => {
+  const N = reviews.length;
+  const [idx, setIdx] = useState(0);
+  const [dir, setDir] = useState(1);
+  const [paused, setPaused] = useState(false);
+
+  const go = (d: number) => {
+    setDir(d);
+    setIdx((i) => (i + d + N) % N);
+  };
+
+  useEffect(() => {
+    if (paused) return;
+    const t = setInterval(() => {
+      setDir(1);
+      setIdx((i) => (i + 1) % N);
+    }, 4600);
+    return () => clearInterval(t);
+  }, [paused, N]);
+
+  return (
+    <div className="[perspective:1500px]">
+      <div className="relative h-[500px] [transform-style:preserve-3d]">
+        <AnimatePresence initial={false} custom={dir}>
+          <motion.div
+            key={idx}
+            custom={dir}
+            initial={{ rotateY: dir > 0 ? 70 : -70, x: dir > 0 ? 60 : -60, opacity: 0 }}
+            animate={{ rotateY: 0, x: 0, opacity: 1 }}
+            exit={{ rotateY: dir > 0 ? -70 : 70, x: dir > 0 ? -60 : 60, opacity: 0 }}
+            transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.5}
+            onDragStart={() => setPaused(true)}
+            onDragEnd={(_e, info) => {
+              if (info.offset.x < -60) go(1);
+              else if (info.offset.x > 60) go(-1);
+              setTimeout(() => setPaused(false), 5000);
+            }}
+            className="absolute inset-0 rounded-[22px] bg-white shadow-[0_24px_60px_-24px_rgba(15,23,42,0.4)] overflow-hidden [transform-origin:center] [backface-visibility:hidden]"
+          >
+            <ReviewCard t={reviews[idx]} clamp={20} />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      <div className="mt-5 flex items-center justify-center gap-3">
+        <button
+          onClick={() => {
+            go(-1);
+            setPaused(true);
+            setTimeout(() => setPaused(false), 6000);
+          }}
+          aria-label="Previous review"
+          className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-600 hover:bg-slate-50 active:scale-95 transition"
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </button>
+        <span className="text-xs font-mono text-slate-400">
+          <span className="font-bold text-slate-700">{idx + 1}</span> / {N}
+        </span>
+        <button
+          onClick={() => {
+            go(1);
+            setPaused(true);
+            setTimeout(() => setPaused(false), 6000);
+          }}
+          aria-label="Next review"
+          className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-600 hover:bg-slate-50 active:scale-95 transition"
+        >
+          <ChevronRight className="w-4 h-4" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
 export const TestimonialsSection: React.FC = () => {
   const [vw, setVw] = useState(1280);
-  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     const on = () => setVw(window.innerWidth);
@@ -81,13 +160,13 @@ export const TestimonialsSection: React.FC = () => {
     return () => window.removeEventListener('resize', on);
   }, []);
 
-  const isDesktop = vw >= 768;
+  const isMobile = vw < 768;
   const pageWidth = Math.min(360, Math.max(280, Math.floor((vw - 100) / 2 - 24)));
   const pageHeight = Math.round(pageWidth * 1.32);
 
   const avg = (TESTIMONIALS.reduce((s, t) => s + t.rating, 0) / TESTIMONIALS.length).toFixed(1);
 
-  // Pair the reviews into book leaves (front + back per leaf).
+  // Desktop only: pair the reviews into book leaves (front + back per leaf).
   const leaves: PageFlipLeaf[] = useMemo(() => {
     const out: PageFlipLeaf[] = [];
     for (let i = 0; i < TESTIMONIALS.length; i += 2) {
@@ -108,12 +187,10 @@ export const TestimonialsSection: React.FC = () => {
     return out;
   }, [avg]);
 
-  const mobileList = showAll ? TESTIMONIALS : TESTIMONIALS.slice(0, 6);
-
   return (
-    <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-12 bg-[#faf5f3] overflow-x-hidden">
+    <section id="testimonials" className="py-20 bg-[#faf5f3] overflow-x-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-10">
+        <div className="text-center max-w-2xl mx-auto mb-10 px-4 sm:px-6">
           <BlurText
             as="h2"
             text="What Our Travelers Say"
@@ -136,7 +213,7 @@ export const TestimonialsSection: React.FC = () => {
         </div>
 
         {/* Google rating summary */}
-        <div className="mx-auto mb-8 flex max-w-md items-center justify-center gap-5 rounded-2xl bg-white px-7 py-5 shadow-[0_18px_44px_-22px_rgba(15,23,42,0.3)]">
+        <div className="mx-4 sm:mx-auto mb-8 flex max-w-md items-center justify-center gap-4 sm:gap-5 rounded-2xl bg-white px-5 sm:px-7 py-5 shadow-[0_18px_44px_-22px_rgba(15,23,42,0.3)]">
           <span className="grid h-12 w-12 place-items-center rounded-full bg-white shadow ring-1 ring-slate-100 text-2xl">
             <GoogleG />
           </span>
@@ -165,9 +242,11 @@ export const TestimonialsSection: React.FC = () => {
           <Stars className="ml-1" />
         </div>
 
-        {isDesktop ? (
-          /* 3D pageflip book of reviews */
-          <>
+        {/* Reviews — 3D page-flip book on desktop, full-width flip card on mobile */}
+        <div className="px-4 sm:px-6 lg:px-12">
+          {isMobile ? (
+            <MobileReviewFlip reviews={TESTIMONIALS} />
+          ) : (
             <ThreeDImagePageflip
               pages={leaves}
               pageWidth={pageWidth}
@@ -181,35 +260,12 @@ export const TestimonialsSection: React.FC = () => {
               showPageNumbers={false}
               duration={0.7}
             />
-            <p className="mt-1 text-center text-[11px] text-slate-400">
-              Hover to peek · click a page or use the arrows to flip through all {TESTIMONIALS.length} reviews
-            </p>
-          </>
-        ) : (
-          /* Mobile: stacked list */
-          <>
-            <div className="space-y-4">
-              {mobileList.map((t) => (
-                <div
-                  key={t.id}
-                  className="rounded-2xl bg-white border border-slate-100 shadow-[0_14px_40px_-24px_rgba(15,23,42,0.28)]"
-                >
-                  <ReviewCard t={t} />
-                </div>
-              ))}
-            </div>
-            {TESTIMONIALS.length > 6 && (
-              <div className="mt-6 text-center">
-                <button
-                  onClick={() => setShowAll((v) => !v)}
-                  className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-7 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-[#1e40af] hover:border-[#1e40af] hover:bg-blue-50 transition-colors"
-                >
-                  {showAll ? 'Show fewer reviews' : `Read all ${TESTIMONIALS.length} reviews`}
-                </button>
-              </div>
-            )}
-          </>
-        )}
+          )}
+          <p className="mt-3 text-center text-[11px] text-slate-400">
+            {isMobile ? 'Swipe or tap the arrows' : 'Hover to peek · click a page or use the arrows'} to browse all{' '}
+            {TESTIMONIALS.length} reviews
+          </p>
+        </div>
       </div>
     </section>
   );

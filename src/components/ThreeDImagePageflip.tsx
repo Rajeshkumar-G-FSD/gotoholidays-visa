@@ -41,6 +41,8 @@ export interface ThreeDImagePageflipProps {
   easing?: string;
   shadowIntensity?: number;
   spineShift?: boolean;
+  /** Show a two-page spread (default). Set false for a single-page book (mobile). */
+  spread?: boolean;
   radius?: string | number;
   showPageNumbers?: boolean;
   showSpineBinding?: boolean;
@@ -79,6 +81,7 @@ export const ThreeDImagePageflip = forwardRef<ThreeDImagePageflipHandle, ThreeDI
       easing = 'cubic-bezier(0.4, 0, 0.2, 1)',
       shadowIntensity = 0.45,
       spineShift = true,
+      spread = true,
       radius = '10px',
       showPageNumbers = true,
       showSpineBinding = true,
@@ -173,7 +176,7 @@ export const ThreeDImagePageflip = forwardRef<ThreeDImagePageflipHandle, ThreeDI
           className="relative flex items-center justify-center transition-all duration-500"
           style={{
             perspective: `${perspective}px`,
-            width: `${pageWidth * 2 + 40}px`,
+            width: `${(spread ? pageWidth * 2 : pageWidth) + 40}px`,
             height: `${pageHeight + 40}px`,
           }}
         >
@@ -184,7 +187,7 @@ export const ThreeDImagePageflip = forwardRef<ThreeDImagePageflipHandle, ThreeDI
               height: `${pageHeight}px`,
               transformStyle: 'preserve-3d',
               transition: `transform ${duration}s ${easing}`,
-              transform: spineShift && isOpen ? `translateX(${pageWidth / 2}px)` : 'translateX(0)',
+              transform: spread && spineShift && isOpen ? `translateX(${pageWidth / 2}px)` : 'translateX(0)',
             }}
           >
             {showSpineBinding && (
@@ -355,7 +358,7 @@ export const ThreeDImagePageflip = forwardRef<ThreeDImagePageflipHandle, ThreeDI
         </div>
 
         {showControls && (
-          <div className="flex items-center justify-center gap-3 mt-4 select-none">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-4 select-none">
             <button
               onClick={flipPrev}
               disabled={currentTurned === 0}
