@@ -102,7 +102,7 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({
             from={{ opacity: 0, y: 18 }}
             to={{ opacity: 1, y: 0 }}
             textAlign="left"
-            className="mt-2 text-xl sm:text-2xl font-playfair italic text-red-400 !block"
+            className="mt-2 text-xl sm:text-2xl font-playfair italic text-[#60a5fa] !block"
           />
 
           <p className="mt-5 max-w-2xl text-sm sm:text-base text-slate-100 leading-relaxed font-manrope drop-shadow">
@@ -111,7 +111,7 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({
 
           <button
             onClick={scrollToRoadmap}
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm font-bold uppercase tracking-[0.14em] px-7 py-3.5 transition-colors cursor-pointer"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#1e40af] hover:bg-[#1d4ed8] text-white text-xs sm:text-sm font-bold uppercase tracking-[0.14em] px-7 py-3.5 transition-colors cursor-pointer"
           >
             Explore Packages <ChevronRight className="w-4 h-4" />
           </button>
@@ -125,7 +125,7 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({
             <div key={s.label} className="px-5 sm:px-7 py-6">
               <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400">{s.label}</p>
               {s.sub && <p className="text-xs text-slate-400 line-through mt-1.5">{s.sub}</p>}
-              <p className={`text-lg sm:text-xl font-bold mt-0.5 ${s.accent ? 'text-red-600' : 'text-[#0f172a]'}`}>
+              <p className={`text-lg sm:text-xl font-bold mt-0.5 ${s.accent ? 'text-[#1e40af]' : 'text-[#0f172a]'}`}>
                 {s.value}
               </p>
               {s.note && <p className="text-[10px] uppercase tracking-wider text-slate-400">{s.note}</p>}

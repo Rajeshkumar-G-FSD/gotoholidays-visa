@@ -250,30 +250,199 @@ export const DESTINATION_PACKAGES: DestinationPackage[] = [
   },
 ];
 
+// Real Google reviews for Goto Holidays & Visa.
 export const TESTIMONIALS: Testimonial[] = [
   {
-    id: 't1',
+    id: 'r1',
+    name: 'Swathi Gopan',
+    rating: 5,
+    timeAgo: '3 months ago',
+    meta: '3 reviews',
     quote:
-      'Seamless process for my parents US visa. The team were incredibly helpful with the interview prep. Highly recommended!',
-    name: 'Rahul Sharma',
-    role: 'USA Visitor Visa',
-    avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+      'Had a wonderful experience booking our Japan package with GOTO HOLIDAYS. Even though our travel plan could not be completed as expected, the team was extremely supportive, professional, and responsive throughout the process. They guided us clearly with all travel and visa-related information and provided excellent customer service at every step. Special thanks to Nishanth and the team for their patience and dedication. Highly recommended for international tour packages and visa assistance.',
   },
   {
-    id: 't2',
+    id: 'r2',
+    name: 'Sudha Kar',
+    rating: 5,
+    timeAgo: '3 months ago',
+    meta: 'Local Guide · 4 reviews',
     quote:
-      'Booking our honeymoon to Maldives through GOTO Holidays was the best decision. Everything was pre-planned to perfection.',
-    name: 'Priya Patel',
-    role: 'Europe (Schengen)',
-    avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+      'Thank you so much for all your help in planning our trip. Your support, quick responses, and attention to detail made everything smooth and stress-free. We truly appreciate your professionalism and effort in arranging such a wonderful travel experience. Looking forward to booking with you again in the future!',
   },
   {
-    id: 't3',
+    id: 'r3',
+    name: 'Krishna Moorthi',
+    rating: 5,
+    timeAgo: 'a year ago',
+    meta: '1 review · 24 photos',
     quote:
-      'Excellent service and transparency regarding the Thailand packages. The hotel selection was premium yet affordable.',
-    name: 'David Wilson',
-    role: 'Thailand Family Trip',
-    avatar: 'https://randomuser.me/api/portraits/men/76.jpg',
+      'Recently got my UK tourist visa approved with the excellent support of Gotoo Holidays & Visa, and I’m extremely happy with their service! Special thanks to Mr. Nishanth, who was very cooperative, friendly, and professional throughout the entire process. He guided me step-by-step — from document preparation to submission — and made everything smooth and stress-free. He patiently clarified all my doubts and was always available whenever I needed assistance. Highly recommend Gotoo Holidays & Visa for anyone looking for trustworthy visa services. Thank you once again, Nishanth sir!',
+  },
+  {
+    id: 'r4',
+    name: 'Ranjith S T',
+    rating: 5,
+    timeAgo: '9 months ago',
+    meta: '1 review · 3 photos',
+    quote:
+      'Goto holidays 100% recommended, Dubai package was done perfectly, highly recommend. Thanks Nishanth, keep it up.',
+  },
+  {
+    id: 'r5',
+    name: 'Mithun Kumar',
+    rating: 5,
+    timeAgo: 'a year ago',
+    meta: '13 reviews',
+    quote:
+      'Had such a smooth experience in getting the US B1/B2 visa. Mr. Nishaanth was really helpful and assisted from scratch till procuring the visa in hand. Really looking forward to getting in touch with them for various other countries’ visas. Go for it, without a doubt!',
+  },
+  {
+    id: 'r6',
+    name: 'Raja Thilakan',
+    rating: 5,
+    timeAgo: 'a year ago',
+    meta: '6 reviews',
+    quote:
+      'I got my US Visa with expert guidance by Mr. Nishanth. He has immense experience, guided at each stage and made getting the US visa easy. Once again, I thank him and I personally recommend him to whoever wants to apply for any kind of visa.',
+  },
+  {
+    id: 'r7',
+    name: 'Arun Kumar',
+    rating: 5,
+    timeAgo: 'a year ago',
+    meta: '1 review',
+    quote:
+      'Gotoo Holidays & Visa saved my time by asking me to submit all the necessary papers to initiate the PR permit process. Their instructions were quite clear and transparent. I like their service quality!',
+  },
+  {
+    id: 'r8',
+    name: 'Surya G V',
+    rating: 5,
+    timeAgo: 'a year ago',
+    meta: '8 reviews · 13 photos',
+    quote:
+      'My visa was rejected earlier due to bad guidance and services through a different consultancy. I was searching for an authorised consultant, and from social media I learned about Gotoo Holidays & Visa. I was very satisfied by their honest guidance and support, and I feel blessed to work with Gotoo Holidays & Visa.',
+  },
+  {
+    id: 'r9',
+    name: 'Ram C',
+    rating: 5,
+    timeAgo: 'a year ago',
+    meta: '5 reviews',
+    quote:
+      'Mr Nishant is really a very friendly and energetic person. Helps you out in visa processing for many countries including the US. Very genuine, trustworthy person for visa, tickets and hotel accommodation.',
+  },
+  {
+    id: 'r10',
+    name: 'Baldeep Singh',
+    rating: 5,
+    timeAgo: 'a year ago',
+    meta: '5 reviews',
+    quote:
+      'My experience was very good with Gotoo. In future too, regarding any visa or flight ticket I will book from him only. Price wise also good and cheaper than others. Really trustful and nicely talking.',
+  },
+  {
+    id: 'r11',
+    name: 'Dinesh Ajay',
+    rating: 5,
+    timeAgo: 'a year ago',
+    meta: 'Local Guide · 37 reviews · 7 photos',
+    quote:
+      'I blindly suggest Nishanth bro — flawless service, got a work visa in 24 hrs for Thailand and also cheaper compared to others. My rating is 10/10 for friendly service, and we will be connected always for future bookings.',
+  },
+  {
+    id: 'r12',
+    name: 'Nisha Ravi',
+    rating: 5,
+    timeAgo: 'a year ago',
+    meta: '3 reviews',
+    quote:
+      'Good experience in Gotoo Holidays. The agent was very helpful and answered all my questions with a good response, making sure my stay was organised perfectly. I also appreciate the good service — they are ready to assist me immediately. Thank you Gotoo Holidays.',
+  },
+  {
+    id: 'r13',
+    name: 'Iyappan Iyappan',
+    rating: 5,
+    timeAgo: 'a year ago',
+    meta: '1 review',
+    quote:
+      'Amazing service with Gotoo Holidays and Visa. They did the Manali–Shimla package, good service, recommended. Mr Nishanth was handling it very well.',
+  },
+  {
+    id: 'r14',
+    name: 'Sai Kailash R',
+    rating: 5,
+    timeAgo: 'a year ago',
+    meta: 'Local Guide · 13 reviews · 29 photos',
+    quote:
+      'Recently my friend referred Gotoo Holidays. I got my USA visa approved in a very short period — very knowledgeable about documentation.',
+  },
+  {
+    id: 'r15',
+    name: 'Vimal Ragesh',
+    rating: 5,
+    timeAgo: 'a year ago',
+    meta: '1 review · 1 photo',
+    quote:
+      'Flight tickets are much cheaper compared to online. Very happy about the service, keep it up, good service. 100% recommended.',
+  },
+  {
+    id: 'r16',
+    name: 'Raji M',
+    rating: 5,
+    timeAgo: 'a year ago',
+    meta: '3 reviews',
+    quote: 'I contacted Mr Nishanth and he gave enough clarity about USA visa documentation and appointment.',
+  },
+  {
+    id: 'r17',
+    name: 'Agneesh',
+    rating: 5,
+    timeAgo: 'a year ago',
+    meta: '1 review',
+    quote:
+      'Thanks to Gooto Holidays for providing the security and background information. They provide complete and accurate information to all questions that require an explanation.',
+  },
+  {
+    id: 'r18',
+    name: 'Ravichandran Sivathanu',
+    rating: 5,
+    timeAgo: '9 months ago',
+    meta: '1 review',
+    quote: 'Awesome service, highly recommend. Mr Nishanth guided very well and is knowledgeable.',
+  },
+  {
+    id: 'r19',
+    name: 'Visak Kolappan',
+    rating: 5,
+    timeAgo: 'a year ago',
+    meta: '3 reviews · 6 photos',
+    quote: 'Good service and gave a beautiful Shimla and Manali trip. Organised by Nishanth — highly recommend, no doubt.',
+  },
+  {
+    id: 'r20',
+    name: 'Ganesh',
+    rating: 5,
+    timeAgo: 'a year ago',
+    meta: '1 review',
+    quote: 'Good job Gotoo Holidays, nicely done — USA early appointment.',
+  },
+  {
+    id: 'r21',
+    name: 'Meena Lakshmanan',
+    rating: 5,
+    timeAgo: 'a year ago',
+    meta: '5 reviews',
+    quote: 'Very excellent. Nice hospitality and arrangements.',
+  },
+  {
+    id: 'r22',
+    name: 'Noorunnisa Sheriff',
+    rating: 5,
+    timeAgo: '3 months ago',
+    meta: '1 review',
+    quote: 'Awesome services.',
   },
 ];
 

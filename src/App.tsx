@@ -3,6 +3,7 @@ import { ActiveTab, Destination, TravelPackage, VisaRequirement, InquiryFormData
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { HeroHome } from './components/HeroHome';
+import { UpdatesMarquee } from './components/UpdatesMarquee';
 import { StatsBand } from './components/StatsBand';
 import { VisaServicesSection } from './components/VisaServicesSection';
 import { VisaServicesPage } from './components/VisaServicesPage';
@@ -142,6 +143,9 @@ export const App: React.FC = () => {
               onNavigate={handleNavigate}
               onSelectDestination={(dest) => setSelectedDestination(dest)}
             />
+
+            {/* Live travel & visa updates ticker */}
+            <UpdatesMarquee />
 
             {/* Animated Stats Band */}
             <StatsBand />

@@ -53,10 +53,11 @@ export interface GlobalPackage {
 
 export interface Testimonial {
   id: string;
-  quote: string;
   name: string;
-  role: string;
-  avatar: string;
+  quote: string;
+  rating: number;
+  timeAgo: string;
+  meta: string;
 }
 
 export interface RoadmapStop {

@@ -29,7 +29,7 @@ const Field: React.FC<{ label: string; required?: boolean; hint?: string; childr
 }) => (
   <label className={`flex flex-col gap-1.5 ${full ? 'sm:col-span-2' : ''}`}>
     <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500">
-      {label} {required && <span className="text-red-500">*</span>}
+      {label} {required && <span className="text-[#1e40af]">*</span>}
     </span>
     {children}
     {hint && <span className="text-[11px] text-slate-400">{hint}</span>}
@@ -120,10 +120,10 @@ export const EnquiryPage: React.FC<EnquiryPageProps> = ({ initialTab = 'travel',
     <div className="w-full bg-[#faf5f3]">
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-b from-[#0a192f] to-[#0f2b5c] pt-32 pb-20 px-4 sm:px-6 lg:px-12 text-center">
-        <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#93c5fd] mb-3">Goto Holidays · Enquiry Desk</p>
+        <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#93c5fd] mb-3">Goto Holidays · Get in Touch</p>
         <BlurText
           as="h1"
-          text="Send Us Your Enquiry"
+          text="Get in Touch"
           animateBy="words"
           direction="top"
           delay={100}

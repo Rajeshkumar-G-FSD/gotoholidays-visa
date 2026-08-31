@@ -24,7 +24,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onNavigate }) => {
     { tab: 'destinations', label: 'Destinations' },
     { tab: 'visa-services', label: 'Visa Services' },
     { tab: 'packages', label: 'Packages' },
-    { tab: 'enquiry', label: 'Enquiry' },
+    { tab: 'enquiry', label: 'Get in Touch' },
     { tab: 'about', label: 'About Us' },
     { tab: 'contact', label: 'Contact' },
   ];

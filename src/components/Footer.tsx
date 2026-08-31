@@ -1,6 +1,7 @@
 import React from 'react';
 import { Instagram, Youtube, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import { ActiveTab } from '../types';
+import { CONTACT_INFO } from '../data/contact';
 
 interface FooterProps {
   onNavigate: (tab: ActiveTab) => void;
@@ -51,22 +52,33 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* Contact */}
           <div className="lg:col-span-3 space-y-4">
-            <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-red-400">Contact Us</h4>
+            <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#93c5fd]">Contact Us</h4>
             <div className="space-y-3 text-sm">
               <div className="flex gap-2.5">
                 <Mail className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Email Inquiries</p>
-                  <p className="text-blue-200">gotoholidaysandvisa@gmail.com</p>
-                  <p className="text-blue-200">info@gotoholidays-visa.co.in</p>
+                  {CONTACT_INFO.emails.map((e) => (
+                    <a key={e} href={`mailto:${e}`} className="block text-blue-200 hover:text-white transition-colors">
+                      {e}
+                    </a>
+                  ))}
                 </div>
               </div>
               <div className="flex gap-2.5">
                 <Phone className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Priority Hotline</p>
-                  <p className="text-slate-200 font-semibold">+91 984045 4061</p>
-                  <p className="text-emerald-400 font-semibold">WhatsApp: +91 984045 4061</p>
+                  {CONTACT_INFO.phones.map((p) => (
+                    <a
+                      key={p}
+                      href={`tel:${p.replace(/\s/g, '')}`}
+                      className="block text-slate-200 font-semibold hover:text-white transition-colors"
+                    >
+                      {p}
+                    </a>
+                  ))}
+                  <p className="text-emerald-400 font-semibold">WhatsApp: {CONTACT_INFO.whatsapp}</p>
                 </div>
               </div>
             </div>
@@ -74,40 +86,30 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* Offices */}
           <div className="lg:col-span-3 space-y-4">
-            <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-red-400">Offices</h4>
+            <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#93c5fd]">Offices</h4>
             <div className="space-y-4 text-xs leading-relaxed text-slate-300">
-              <div className="flex gap-2.5">
-                <MapPin className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Chennai HQ</p>
-                  <p>
-                    No:2/305, Puzgalanthi salai ki,
-                    <br />
-                    J.J nagar east, Mugappair east,
-                    <br />
-                    Chennai 600037
-                  </p>
+              {CONTACT_INFO.offices.map((o) => (
+                <div key={o.name} className="flex gap-2.5">
+                  <MapPin className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{o.name}</p>
+                    <p>
+                      {o.lines.map((l, i) => (
+                        <React.Fragment key={i}>
+                          {l}
+                          {i < o.lines.length - 1 && <br />}
+                        </React.Fragment>
+                      ))}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex gap-2.5">
-                <MapPin className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Nagercoil Office</p>
-                  <p>
-                    NO 23-80A EAST STREET KAKAMOOR,
-                    <br />
-                    SUCHINDRUM, KANYAKUMARI,
-                    <br />
-                    TN 629704
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
           {/* Legal */}
           <div className="lg:col-span-2 space-y-4">
-            <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-red-400">Legal &amp; Privacy</h4>
+            <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#93c5fd]">Legal &amp; Privacy</h4>
             <ul className="space-y-2.5 text-sm">
               {LEGAL.map((item) => (
                 <li key={item}>

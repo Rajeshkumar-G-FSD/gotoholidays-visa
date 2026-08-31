@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { OFFICE_LOCATIONS } from '../data/travelData';
 import { InquiryFormData } from '../types';
-import { Mail, Phone, Clock, ArrowRight, MapPin, Send, CheckCircle } from 'lucide-react';
+import { CONTACT_INFO } from '../data/contact';
+import { Mail, Phone, Clock, ArrowRight, MapPin, MessageCircle, CheckCircle } from 'lucide-react';
 
 interface ContactViewProps {
   onFormSubmit: (data: InquiryFormData) => void;
@@ -184,80 +184,98 @@ export const ContactView: React.FC<ContactViewProps> = ({ onFormSubmit }) => {
           )}
         </div>
 
-        {/* Info & Global Offices Column */}
+        {/* Contact Info Column — same details as the site footer */}
         <div className="lg:col-span-5 space-y-6">
-          
           {/* Direct Contact Card */}
           <div className="bg-white p-6 sm:p-8 rounded-3xl border border-blue-100 space-y-5 shadow-xl shadow-blue-950/5">
-            <h3 className="text-xl font-bold text-[#0f172a] font-playfair">Direct Concierge</h3>
-            
+            <h3 className="text-xl font-bold text-[#0f172a] font-playfair">Talk to Our Team</h3>
+
             <div className="space-y-4 text-sm">
-              <div className="flex items-center gap-3.5 text-[#334155]">
-                <div className="w-9 h-9 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-[#1e40af] shadow-sm">
+              <div className="flex items-start gap-3.5 text-[#334155]">
+                <div className="w-9 h-9 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-[#1e40af] shadow-sm shrink-0">
                   <Mail className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="text-xs text-slate-400 uppercase font-bold">Email Us</p>
-                  <p className="text-[#0f172a] font-semibold">concierge@gotoholidays.com</p>
+                  <p className="text-xs text-slate-400 uppercase font-bold">Email Inquiries</p>
+                  {CONTACT_INFO.emails.map((e) => (
+                    <a key={e} href={`mailto:${e}`} className="block text-[#0f172a] font-semibold hover:text-[#1e40af] transition-colors">
+                      {e}
+                    </a>
+                  ))}
                 </div>
               </div>
 
-              <div className="flex items-center gap-3.5 text-[#334155]">
-                <div className="w-9 h-9 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-[#1e40af] shadow-sm">
+              <div className="flex items-start gap-3.5 text-[#334155]">
+                <div className="w-9 h-9 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-[#1e40af] shadow-sm shrink-0">
                   <Phone className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="text-xs text-slate-400 uppercase font-bold">Call Anywhere</p>
-                  <p className="text-[#0f172a] font-semibold">+1 (800) 555-0199</p>
+                  <p className="text-xs text-slate-400 uppercase font-bold">Priority Hotline</p>
+                  {CONTACT_INFO.phones.map((p) => (
+                    <a
+                      key={p}
+                      href={`tel:${p.replace(/\s/g, '')}`}
+                      className="block text-[#0f172a] font-semibold hover:text-[#1e40af] transition-colors"
+                    >
+                      {p}
+                    </a>
+                  ))}
                 </div>
               </div>
 
-              <div className="flex items-center gap-3.5 text-[#334155]">
-                <div className="w-9 h-9 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-[#1e40af] shadow-sm">
+              <div className="flex items-start gap-3.5 text-[#334155]">
+                <div className="w-9 h-9 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shadow-sm shrink-0">
+                  <MessageCircle className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="text-xs text-slate-400 uppercase font-bold">WhatsApp</p>
+                  <a
+                    href={`https://wa.me/${CONTACT_INFO.whatsapp.replace(/[^0-9]/g, '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#0f172a] font-semibold hover:text-emerald-600 transition-colors"
+                  >
+                    {CONTACT_INFO.whatsapp}
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3.5 text-[#334155]">
+                <div className="w-9 h-9 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-[#1e40af] shadow-sm shrink-0">
                   <Clock className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="text-xs text-slate-400 uppercase font-bold">Concierge Desk</p>
-                  <p className="text-[#0f172a] font-semibold">24 Hours / 7 Days a Week</p>
+                  <p className="text-xs text-slate-400 uppercase font-bold">Support Hours</p>
+                  <p className="text-[#0f172a] font-semibold">{CONTACT_INFO.hours}</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Global Offices Maps */}
-          <div className="space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 px-1">
-              Global Offices
-            </h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-              {OFFICE_LOCATIONS.map((loc, idx) => (
-                <div
-                  key={idx}
-                  className="bg-white p-4 rounded-2xl border border-blue-100 flex items-center gap-4 group shadow-md hover:border-blue-300 transition-all"
-                >
-                  <img
-                    src={loc.mapImage}
-                    alt={loc.city}
-                    className="w-20 h-20 rounded-xl object-cover border border-blue-100 flex-shrink-0 group-hover:scale-105 transition-transform"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <h4 className="text-sm font-bold text-[#0f172a]">{loc.city}</h4>
-                      <span className="bg-blue-50 text-[#1e40af] border border-blue-100 text-[10px] font-bold px-2 py-0.5 rounded-full">
-                        {loc.badge}
-                      </span>
-                    </div>
-                    <p className="text-xs text-[#475569] whitespace-pre-line leading-relaxed">
-                      {loc.address}
+          {/* Offices */}
+          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-blue-100 space-y-5 shadow-xl shadow-blue-950/5">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">Our Offices</h3>
+            <div className="space-y-5">
+              {CONTACT_INFO.offices.map((o) => (
+                <div key={o.name} className="flex items-start gap-3.5">
+                  <div className="w-9 h-9 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-[#1e40af] shadow-sm shrink-0">
+                    <MapPin className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-[#0f172a]">{o.name}</h4>
+                    <p className="text-xs text-[#475569] leading-relaxed">
+                      {o.lines.map((l, i) => (
+                        <React.Fragment key={i}>
+                          {l}
+                          {i < o.lines.length - 1 && <br />}
+                        </React.Fragment>
+                      ))}
                     </p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-
         </div>
 
       </div>

@@ -53,7 +53,7 @@ export const DiscoverPackagesPage: React.FC<DiscoverPackagesPageProps> = ({
             animateBy="words"
             direction="top"
             delay={150}
-            className="justify-center text-5xl sm:text-6xl lg:text-7xl font-playfair italic text-red-500 drop-shadow-xl -mt-1"
+            className="justify-center text-5xl sm:text-6xl lg:text-7xl font-playfair italic text-[#60a5fa] drop-shadow-xl -mt-1"
           />
 
           <SplitText

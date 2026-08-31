@@ -48,7 +48,7 @@ export const DestinationSearch: React.FC<DestinationSearchProps> = ({ onSelect }
         />
         <button
           onClick={explore}
-          className="shrink-0 inline-flex items-center gap-2 rounded-full bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm font-bold uppercase tracking-[0.12em] px-5 sm:px-7 py-3 sm:py-3.5 transition-colors cursor-pointer"
+          className="shrink-0 inline-flex items-center gap-2 rounded-full bg-[#1e40af] hover:bg-[#1d4ed8] text-white text-xs sm:text-sm font-bold uppercase tracking-[0.12em] px-5 sm:px-7 py-3 sm:py-3.5 transition-colors cursor-pointer"
         >
           <Binoculars className="w-4 h-4" />
           <span>Explore</span>

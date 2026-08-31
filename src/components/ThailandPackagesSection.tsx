@@ -16,7 +16,7 @@ export const ThailandPackagesSection: React.FC<ThailandPackagesSectionProps> = (
     <section id="thailand-packages" className="py-20 px-4 sm:px-6 lg:px-12 bg-[#faf5f3]">
       <div className="max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <p className="text-[11px] font-bold uppercase tracking-[0.35em] text-red-600 mb-3">Seasonal Special</p>
+          <p className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#1e40af] mb-3">Seasonal Special</p>
           <BlurText
             as="h2"
             text="Best Thailand Tour Packages"
@@ -60,7 +60,7 @@ export const ThailandPackagesSection: React.FC<ThailandPackagesSectionProps> = (
                   <ul className="mt-4 space-y-2">
                     {pkg.inclusions.map((inc) => (
                       <li key={inc} className="flex items-center gap-2 text-xs font-semibold text-slate-600">
-                        <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#1e40af] shrink-0" />
                         {inc}
                       </li>
                     ))}
@@ -68,7 +68,7 @@ export const ThailandPackagesSection: React.FC<ThailandPackagesSectionProps> = (
 
                   <div className="mt-auto pt-6 flex items-end justify-between gap-3">
                     <div>
-                      <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-red-600">Starting From</p>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#1e40af]">Starting From</p>
                       <p className="text-xl font-bold text-[#0f172a]">{inr(pkg.priceFrom)}</p>
                     </div>
                     <button

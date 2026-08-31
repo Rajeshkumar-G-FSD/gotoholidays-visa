@@ -15,9 +15,9 @@ interface VisaServicesSectionProps {
 
 const ACCENT: Record<VisaService['accent'], string> = {
   blue: 'bg-blue-50 text-blue-600',
-  rose: 'bg-rose-50 text-rose-500',
+  rose: 'bg-sky-50 text-sky-600',
   green: 'bg-emerald-50 text-emerald-600',
-  red: 'bg-red-50 text-red-600',
+  red: 'bg-indigo-50 text-indigo-600',
   amber: 'bg-amber-50 text-amber-600',
   yellow: 'bg-yellow-50 text-yellow-600',
 };
@@ -60,7 +60,7 @@ export const VisaServicesSection: React.FC<VisaServicesSectionProps> = ({
           {showViewAll && (
             <button
               onClick={onViewAll}
-              className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-red-700 hover:text-red-800 transition-colors cursor-pointer shrink-0"
+              className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-[#1e40af] hover:text-[#1d4ed8] transition-colors cursor-pointer shrink-0"
             >
               <span>View All Visas</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />

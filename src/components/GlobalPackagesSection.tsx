@@ -60,7 +60,7 @@ export const GlobalPackagesSection: React.FC<GlobalPackagesSectionProps> = ({ on
 
                   <div className="p-5 flex items-center justify-between">
                     <div>
-                      <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-red-600">Starting Price</p>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#1e40af]">Starting Price</p>
                       <p className="text-lg font-bold text-[#0f172a]">{inr(pkg.priceFrom)}</p>
                     </div>
                     <button
