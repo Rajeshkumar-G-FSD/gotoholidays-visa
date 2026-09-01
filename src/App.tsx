@@ -24,6 +24,7 @@ import { DestinationDetailModal } from './components/DestinationDetailModal';
 import { PackageDetailModal } from './components/PackageDetailModal';
 import { VisaDetailModal } from './components/VisaDetailModal';
 import { Toast } from './components/Toast';
+import { ChatBot } from './components/ChatBot';
 import { ShieldCheck, Compass, Heart } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -286,6 +287,9 @@ export const App: React.FC = () => {
 
       {/* Scroll-to-top rail */}
       <ScrollTopRail />
+
+      {/* WhatsApp-style guided assistant */}
+      <ChatBot />
 
       {/* Toast Notifications */}
       <Toast toasts={toasts} onDismiss={removeToast} />
