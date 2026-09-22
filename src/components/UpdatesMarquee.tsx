@@ -33,7 +33,7 @@ export const UpdatesMarquee: React.FC = () => {
       <div className={`relative ${edgeFade} space-y-1 sm:space-y-2`}>
         {/* Tour updates — solid, scrolling left */}
         <TextScrollMarquee
-          baseVelocity={1.6}
+          baseVelocity={0.55}
           direction="left"
           className="font-playfair italic font-normal text-white drop-shadow-[0_2px_18px_rgba(96,165,250,0.25)] text-[7.5vw] sm:text-[5vw] lg:text-[3.4vw] leading-[1.15]"
         >
@@ -42,7 +42,7 @@ export const UpdatesMarquee: React.FC = () => {
 
         {/* Visa updates — outlined, scrolling right */}
         <TextScrollMarquee
-          baseVelocity={1.3}
+          baseVelocity={0.45}
           direction="right"
           className="font-playfair font-normal uppercase tracking-tight text-transparent [-webkit-text-stroke:1px_rgba(147,197,253,0.7)] text-[7.5vw] sm:text-[5vw] lg:text-[3.4vw] leading-[1.15]"
         >

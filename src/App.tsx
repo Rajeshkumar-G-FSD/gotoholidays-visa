@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ActiveTab, Destination, TravelPackage, VisaRequirement, InquiryFormData, CustomPlanFormData, ToastMessage } from './types';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
@@ -16,6 +16,7 @@ import { EnquiryPage, EnquiryTab } from './components/EnquiryPage';
 import { AdminPage } from './components/AdminPage';
 import { ScrollTopRail } from './components/ScrollTopRail';
 import { buildRecord, saveEnquiry } from './lib/enquiryStore';
+import { parsePath, pathFor, pushTab } from './lib/router';
 import { VisaRequirementsView } from './components/VisaRequirementsView';
 import { AboutUsView } from './components/AboutUsView';
 import { ContactView } from './components/ContactView';
@@ -27,15 +28,40 @@ import { Toast } from './components/Toast';
 import { ChatBot } from './components/ChatBot';
 import { ShieldCheck, Compass, Heart } from 'lucide-react';
 
+const initialLocation = () =>
+  typeof window === 'undefined' ? { tab: 'home' as ActiveTab } : parsePath(window.location.pathname);
+
 export const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<ActiveTab>('home');
+  const initial = initialLocation();
+  const [activeTab, setActiveTab] = useState<ActiveTab>(initial.tab);
   const [enquiryTab, setEnquiryTab] = useState<EnquiryTab>('travel');
   const [enquiryPrefill, setEnquiryPrefill] = useState('');
-  const [selectedDestinationId, setSelectedDestinationId] = useState<string | null>(null);
+  const [selectedDestinationId, setSelectedDestinationId] = useState<string | null>(
+    initial.destinationId ?? null
+  );
   const [selectedDestination, setSelectedDestination] = useState<Destination | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<TravelPackage | null>(null);
   const [selectedVisa, setSelectedVisa] = useState<VisaRequirement | null>(null);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
+
+  const activeTabRef = useRef(activeTab);
+  useEffect(() => {
+    activeTabRef.current = activeTab;
+  }, [activeTab]);
+
+  // First visit of the session: after 5s, jump to the "Get in Touch" page.
+  useEffect(() => {
+    if (sessionStorage.getItem('gh_enquiry_autoopen')) return;
+    const id = window.setTimeout(() => {
+      sessionStorage.setItem('gh_enquiry_autoopen', '1');
+      if (window.location.hash.replace('#', '') === 'admin') return;
+      if (activeTabRef.current !== 'home') return;
+      setActiveTab('enquiry');
+      pushTab('enquiry');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 5000);
+    return () => window.clearTimeout(id);
+  }, []);
 
   const addToast = (title: string, description: string, type: 'success' | 'info' | 'error' = 'success') => {
     const id = Date.now().toString();
@@ -51,22 +77,48 @@ export const App: React.FC = () => {
 
   const handleNavigate = (tab: ActiveTab) => {
     setActiveTab(tab);
+    pushTab(tab);
     if (tab !== 'admin' && window.location.hash) window.location.hash = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Open the admin console via #admin (e.g. bookmark) — front-of-site links never expose it.
+  // Keep the browser URL in sync with the active tab — back/forward, a hard
+  // refresh, or a shared link (/home, /packages, /destinations/maldives, …)
+  // all land on the right page. #admin is kept working for old bookmarks.
   useEffect(() => {
-    const sync = () => {
-      if (window.location.hash.replace('#', '') === 'admin') setActiveTab('admin');
+    if (window.location.hash.replace('#', '') === 'admin') {
+      setActiveTab('admin');
+      window.history.replaceState({}, '', '/admin');
+    } else if (!window.location.pathname || window.location.pathname === '/') {
+      window.history.replaceState({}, '', pathFor(initial.tab, initial.destinationId));
+    }
+
+    const onPopState = () => {
+      const loc = parsePath(window.location.pathname);
+      setActiveTab(loc.tab);
+      if (loc.tab === 'destination-detail' && loc.destinationId) {
+        setSelectedDestinationId(loc.destinationId);
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
-    sync();
-    window.addEventListener('hashchange', sync);
-    return () => window.removeEventListener('hashchange', sync);
+    const onHashChange = () => {
+      if (window.location.hash.replace('#', '') === 'admin') {
+        setActiveTab('admin');
+        window.history.replaceState({}, '', '/admin');
+      }
+    };
+    window.addEventListener('popstate', onPopState);
+    window.addEventListener('hashchange', onHashChange);
+    return () => {
+      window.removeEventListener('popstate', onPopState);
+      window.removeEventListener('hashchange', onHashChange);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handlePlanTrip = (destinationOrCountryName?: string) => {
     setActiveTab('plan');
+    pushTab('plan');
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (destinationOrCountryName) {
       addToast('Destination Pre-Selected', `Drafting custom itinerary for ${destinationOrCountryName}.`, 'info');
@@ -77,6 +129,7 @@ export const App: React.FC = () => {
     setEnquiryTab(tab);
     setEnquiryPrefill(prefill);
     setActiveTab('enquiry');
+    pushTab('enquiry');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -93,6 +146,7 @@ export const App: React.FC = () => {
       'success'
     );
     setActiveTab('home');
+    pushTab('home');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -225,6 +279,7 @@ export const App: React.FC = () => {
             onOpenDestination={(id) => {
               setSelectedDestinationId(id);
               setActiveTab('destination-detail');
+              pushTab('destination-detail', id);
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           />
